@@ -1,0 +1,67 @@
+/* line 8, ../sass/style.scss */
+body {
+  font: normal 0.8em/2em Helvetica, Arial;
+  color: #929490;
+  background: #e1e5de;
+}
+
+/* line 13, ../sass/style.scss */
+section {
+  position: relative;
+  margin: 40px auto;
+  max-width: 800px;
+  min-height: 500px;
+}
+
+/* line 20, ../sass/style.scss */
+.main {
+  font-size: 5em;
+  line-height: .75em;
+  letter-spacing: -0.1em;
+}
+
+/* line 25, ../sass/style.scss */
+.me {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  min-height: 800px;
+}
+
+/* line 33, ../sass/style.scss */
+.content {
+  margin: 0 340px 0 0;
+}
+
+/* line 36, ../sass/style.scss */
+nav {
+  height: auto;
+  overflow: hidden;
+}
+/* line 40, ../sass/style.scss */
+nav a, nav a:visited {
+  display: block;
+  float: left;
+  margin: 5px;
+  padding: 20px;
+  width: 96px;
+  height: 96px;
+  font-size: 2em;
+  line-height: .75em;
+  text-decoration: none;
+  color: green;
+  border: 5px #ebeee8 solid;
+}
+/* line 53, ../sass/style.scss */
+nav a:nth-child(3n+1), nav a:visited:nth-child(3n+1) {
+  margin-left: 0;
+}
+/* line 56, ../sass/style.scss */
+nav a:nth-child(3n+3), nav a:visited:nth-child(3n+3) {
+  margin-right: 0;
+}
+/* line 59, ../sass/style.scss */
+nav a.selected, nav a:visited.selected {
+  background: #ced2cb;
+}

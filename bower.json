@@ -1,0 +1,19 @@
+{
+  "name": "stewart-anderson.co.uk",
+  "version": "0.0.0",
+  "authors": [
+    "Stewart Anderson"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "js/components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.8.3"
+  }
+}
