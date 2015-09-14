@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'sourceSansLight';
+    src: url('../fonts/sourcesanspro-el.eot');
+    src: url('../fonts/sourcesanspro-el.eot?#iefix')    format('embedded-opentype'),
+         url('../fonts/sourcesanspro-el.woff2')         format('woff2'),
+         url('../fonts/sourcesanspro-el.woff')          format('woff'),
+         url('../fonts/sourcesanspro-el.ttf')           format('truetype'),
+         url('../fonts/sourcesanspro-el.svg#source_sans_proextralight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'sourceSansReg';
+    src: url('../fonts/sourcesanspro-reg.eot');
+    src: url('../fonts/sourcesanspro-reg.eot?#iefix')   format('embedded-opentype'),
+         url('../fonts/sourcesanspro-reg.woff2')         format('woff2'),
+         url('../fonts/sourcesanspro-reg.woff')          format('woff'),
+         url('../fonts/sourcesanspro-reg.ttf')           format('truetype'),
+         url('../fonts/sourcesanspro-reg.svg#source_sans_proregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

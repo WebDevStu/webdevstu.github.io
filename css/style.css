@@ -1,45 +1,136 @@
-/* line 8, ../sass/style.scss */
+/* line 17, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/gem/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: 'sourceSansLight';
+  src: url("../fonts/sourcesanspro-el.eot");
+  src: url("../fonts/sourcesanspro-el.eot?#iefix") format("embedded-opentype"), url("../fonts/sourcesanspro-el.woff2") format("woff2"), url("../fonts/sourcesanspro-el.woff") format("woff"), url("../fonts/sourcesanspro-el.ttf") format("truetype"), url("../fonts/sourcesanspro-el.svg#source_sans_proextralight") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'sourceSansReg';
+  src: url("../fonts/sourcesanspro-reg.eot");
+  src: url("../fonts/sourcesanspro-reg.eot?#iefix") format("embedded-opentype"), url("../fonts/sourcesanspro-reg.woff2") format("woff2"), url("../fonts/sourcesanspro-reg.woff") format("woff"), url("../fonts/sourcesanspro-reg.ttf") format("truetype"), url("../fonts/sourcesanspro-reg.svg#source_sans_proregular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 6, ../sass/_main.scss */
 body {
-  font: normal 0.8em/2em Helvetica, Arial;
+  font: normal 0.8em/2em "sourceSansLight" Helvetica, Arial;
   color: #929490;
   background: #e1e5de;
 }
 
-/* line 13, ../sass/style.scss */
+/* line 11, ../sass/_main.scss */
+h1, h2, h3, h4, h5, h6, b, strong {
+  font-family: "sourceSansReg" Helvetica, Arial;
+}
+
+/* line 14, ../sass/_main.scss */
+p {
+  margin: 1.2rem 0;
+}
+
+/* line 17, ../sass/_main.scss */
 section {
   position: relative;
-  margin: 40px auto;
+  margin: 20px auto;
   max-width: 800px;
   min-height: 500px;
 }
 
-/* line 20, ../sass/style.scss */
+/* line 23, ../sass/_main.scss */
 .main {
   font-size: 5em;
-  line-height: .75em;
+  line-height: 1.2em;
   letter-spacing: -0.1em;
 }
 
-/* line 25, ../sass/style.scss */
+/* line 28, ../sass/_main.scss */
 .me {
   position: absolute;
   top: 0;
   right: 0;
   width: 300px;
-  min-height: 800px;
 }
 
-/* line 33, ../sass/style.scss */
+/* line 34, ../sass/_main.scss */
 .content {
   margin: 0 340px 0 0;
 }
 
-/* line 36, ../sass/style.scss */
+/* line 37, ../sass/_main.scss */
 nav {
   height: auto;
   overflow: hidden;
+  margin-bottom: 10px;
 }
-/* line 40, ../sass/style.scss */
+/* line 42, ../sass/_main.scss */
 nav a, nav a:visited {
   display: block;
   float: left;
@@ -47,21 +138,38 @@ nav a, nav a:visited {
   padding: 20px;
   width: 96px;
   height: 96px;
-  font-size: 2em;
-  line-height: .75em;
+  line-height: 96px;
+  text-align: center;
   text-decoration: none;
-  color: green;
+  text-transform: uppercase;
+  font-family: "sourceSansReg" Helvetica, Arial;
+  color: #6da344;
   border: 5px #ebeee8 solid;
 }
-/* line 53, ../sass/style.scss */
+/* line 57, ../sass/_main.scss */
 nav a:nth-child(3n+1), nav a:visited:nth-child(3n+1) {
   margin-left: 0;
 }
-/* line 56, ../sass/style.scss */
+/* line 60, ../sass/_main.scss */
 nav a:nth-child(3n+3), nav a:visited:nth-child(3n+3) {
   margin-right: 0;
 }
-/* line 59, ../sass/style.scss */
+/* line 63, ../sass/_main.scss */
+nav a:hover, nav a:visited:hover {
+  background: #dde1da;
+}
+/* line 66, ../sass/_main.scss */
 nav a.selected, nav a:visited.selected {
   background: #ced2cb;
+}
+/* line 69, ../sass/_main.scss */
+nav a.selected:hover, nav a:visited.selected:hover {
+  background: #dbded8;
+}
+
+/* line 85, ../sass/_main.scss */
+footer {
+  padding: 40px;
+  text-align: right;
+  border-top: 5px #ebeee8 solid;
 }

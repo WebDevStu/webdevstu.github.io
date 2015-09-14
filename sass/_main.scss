@@ -1,0 +1,89 @@
+
+$font-regular:          'sourceSansLight' Helvetica, Arial;
+$font-bold:             'sourceSansReg' Helvetica, Arial;
+
+
+body{
+    font: normal 0.8em/2em #{$font-regular};
+    color: #929490;
+    background: #e1e5de;
+}
+h1, h2, h3, h4, h5, h6, b, strong{
+    font-family: $font-bold;
+}
+p{
+    margin: 1.2rem 0;
+}
+section{
+    position: relative;
+    margin: 20px auto;
+    max-width: 800px;
+    min-height: 500px;
+}
+.main{
+    font-size: 5em;
+    line-height: 1.2em;
+    letter-spacing: -0.1em;
+}
+.me{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+}
+.content{
+    margin: 0 340px 0 0;
+}
+nav{
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 10px;
+
+    a, a:visited{
+        display: block;
+        float: left;
+        margin: 5px;
+        padding: 20px;
+        width: 96px;
+        height: 96px;
+        line-height: 96px;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-family: $font-bold;
+        color: #6da344;
+        border: 5px #ebeee8 solid;
+
+        &:nth-child(3n+1) {
+            margin-left: 0;
+        }
+        &:nth-child(3n+3) {
+            margin-right: 0;
+        }
+        &:hover{
+            background: #dde1da;
+        }
+        &.selected{
+            background: #ced2cb;
+
+            &:hover{
+                background: #dbded8;
+            }
+        }
+        &:before{
+
+        }
+    }
+}
+
+
+.projectList{
+
+}
+
+
+footer{
+    padding: 40px;
+    text-align: right;
+    border-top: 5px #ebeee8 solid;
+}
