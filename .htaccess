@@ -1,0 +1,12 @@
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    #------------------------------------------------------------- general pages
+    RewriteRule ^blog$ http://stewart-anderson.co.uk/ [R=301,L,QSA]
+    RewriteRule ^photography$ http://stewart-anderson.co.uk/ [R=301,L,QSA]
+    RewriteRule ^reference-library$ http://stewart-anderson.co.uk/ [R=301,L,QSA]
+    RewriteRule ^link-resources$ http://stewart-anderson.co.uk/ [R=301,L,QSA]
+
+</IfModule>

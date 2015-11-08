@@ -99,7 +99,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /* line 1, ../sass/_main.scss */
 body {
-  font: normal 1em/2.2em "sourceSansLight" Helvetica, Arial;
+  font: normal 1em/1.6em "sourceSansLight" Helvetica, Arial;
   color: #918f85;
   background: #dbdad8;
 }
@@ -113,24 +113,36 @@ h1, h2, h3, h4, h5, h6, b, strong {
 p {
   margin: 1.2rem 0;
 }
-
 /* line 12, ../sass/_main.scss */
+p a, p a:visited {
+  color: #ae1212;
+  text-decoration: none;
+}
+/* line 17, ../sass/_main.scss */
+p a:hover {
+  background: #d1d0cd;
+}
+
+/* line 21, ../sass/_main.scss */
 section {
   position: relative;
+  padding: 0 20px;
   margin: 20px auto;
+  width: auto;
   max-width: 800px;
   min-height: 500px;
 }
 
-/* line 18, ../sass/_main.scss */
+/* line 29, ../sass/_main.scss */
 .main {
+  font-family: "sourceSansReg" Helvetica, Arial;
   font-size: 5em;
   line-height: 1.2em;
   letter-spacing: -0.07em;
   color: #b8b6af;
 }
 
-/* line 24, ../sass/_main.scss */
+/* line 36, ../sass/_main.scss */
 .me {
   position: absolute;
   top: 40px;
@@ -138,18 +150,18 @@ section {
   width: 300px;
 }
 
-/* line 30, ../sass/_main.scss */
+/* line 42, ../sass/_main.scss */
 .content {
-  margin: 0l;
+  margin: 0;
 }
 
-/* line 34, ../sass/_main.scss */
+/* line 46, ../sass/_main.scss */
 nav {
   height: auto;
   overflow: hidden;
   margin-bottom: 10px;
 }
-/* line 39, ../sass/_main.scss */
+/* line 51, ../sass/_main.scss */
 nav a, nav a:visited {
   display: block;
   float: left;
@@ -171,36 +183,37 @@ nav a, nav a:visited {
   border-radius: 8px;
   border: 5px #b8b6af solid;
 }
-/* line 56, ../sass/_main.scss */
+/* line 68, ../sass/_main.scss */
 nav a:before, nav a:visited:before {
   position: absolute;
   text-align: center;
   font-size: 80px;
   color: rgba(184, 182, 175, 0.1);
 }
-/* line 62, ../sass/_main.scss */
+/* line 74, ../sass/_main.scss */
 nav a:nth-child(3n+1), nav a:visited:nth-child(3n+1) {
   margin-left: 0;
 }
-/* line 65, ../sass/_main.scss */
+/* line 77, ../sass/_main.scss */
 nav a:nth-child(3n+3), nav a:visited:nth-child(3n+3) {
   margin-right: 0;
 }
-/* line 68, ../sass/_main.scss */
+/* line 80, ../sass/_main.scss */
 nav a:hover, nav a:visited:hover {
   background: #e0dfdd;
 }
-/* line 71, ../sass/_main.scss */
+/* line 83, ../sass/_main.scss */
 nav a.selected, nav a:visited.selected {
   background: #cccbc8;
 }
-/* line 74, ../sass/_main.scss */
+/* line 86, ../sass/_main.scss */
 nav a.selected:hover, nav a:visited.selected:hover {
   background: #dbdad8;
 }
 
-/* line 80, ../sass/_main.scss */
+/* line 92, ../sass/_main.scss */
 footer {
+  margin-top: 60px;
   padding: 40px;
   text-align: right;
   border-top: 5px #b8b6af solid;

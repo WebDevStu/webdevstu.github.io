@@ -1,5 +1,5 @@
 body{
-    font: normal 1em/2.2em #{$font-regular};
+    font: normal 1em/1.6em #{$font-regular};
     color: $color-font;
     background: $color-background;
 }
@@ -8,14 +8,26 @@ h1, h2, h3, h4, h5, h6, b, strong{
 }
 p{
     margin: 1.2rem 0;
+
+    a, a:visited{
+        color: $color-highlight;
+        text-decoration: none;
+    }
+
+    a:hover{
+        background: darken($color-background, 4%);
+    }
 }
 section{
     position: relative;
+    padding: 0 20px;
     margin: 20px auto;
+    width: auto;
     max-width: 800px;
     min-height: 500px;
 }
 .main{
+    font-family: $font-bold;
     font-size: 5em;
     line-height: 1.2em;
     letter-spacing: -0.07em;
@@ -78,6 +90,7 @@ nav{
     }
 }
 footer{
+    margin-top: 60px;
     padding: 40px;
     text-align: right;
     border-top: 5px $color-heading solid;
