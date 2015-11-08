@@ -1,0 +1,41 @@
+.projects{
+    .project{
+        padding: 18px;
+        margin: 20px 0;
+        @include border-radius(8px);
+        border: 5px $color-heading solid;
+        background: darken($color-background, 2%);
+    }
+    .title{
+        font-size: 2em;
+        color: $color-highlight;
+        font-family: $font-bold;
+    }
+    .links{
+        height: auto;
+        overflow: hidden;
+        font-size: 1.2em;
+
+        li{
+            float: left;
+            margin: 0 10px 0 0;
+        }
+        a, a:visited{
+            display: block;
+            padding: 0 10px;
+            line-height: 22px;
+            text-decoration: none;
+            @include border-radius(4px);
+            color: $color-font;
+            background: lighten($color-background, 2%);
+
+            &:before{
+                margin-right: 10px;
+                line-height: 22px;
+            }
+            &:hover{
+                background: $color-background;
+            }
+        }
+    }
+}

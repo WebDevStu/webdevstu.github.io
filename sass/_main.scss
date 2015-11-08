@@ -1,12 +1,7 @@
-
-$font-regular:          'sourceSansLight' Helvetica, Arial;
-$font-bold:             'sourceSansReg' Helvetica, Arial;
-
-
 body{
-    font: normal 0.8em/2em #{$font-regular};
-    color: #929490;
-    background: #e1e5de;
+    font: normal 1em/2.2em #{$font-regular};
+    color: $color-font;
+    background: $color-background;
 }
 h1, h2, h3, h4, h5, h6, b, strong{
     font-family: $font-bold;
@@ -23,16 +18,18 @@ section{
 .main{
     font-size: 5em;
     line-height: 1.2em;
-    letter-spacing: -0.1em;
+    letter-spacing: -0.07em;
+    color: $color-heading;
 }
 .me{
     position: absolute;
-    top: 0;
+    top: 40px;
     right: 0;
     width: 300px;
 }
 .content{
-    margin: 0 340px 0 0;
+    //margin: 0 340px 0 0;
+    margin: 0;
 }
 nav{
     height: auto;
@@ -50,10 +47,18 @@ nav{
         text-align: center;
         text-decoration: none;
         text-transform: uppercase;
+        font-size: 22px;
         font-family: $font-bold;
-        color: #6da344;
-        border: 5px #ebeee8 solid;
+        color: $color-highlight;
+        @include border-radius(8px);
+        border: 5px $color-heading solid;
 
+        &:before{
+            position: absolute;
+            text-align: center;
+            font-size: 80px;
+            color: rgba($color-heading, 0.1);
+        }
         &:nth-child(3n+1) {
             margin-left: 0;
         }
@@ -61,29 +66,19 @@ nav{
             margin-right: 0;
         }
         &:hover{
-            background: #dde1da;
+            background: lighten($color-background, 2%);
         }
         &.selected{
-            background: #ced2cb;
+            background: darken($color-background, 6%);
 
             &:hover{
-                background: #dbded8;
+                background: $color-background;
             }
-        }
-        &:before{
-
         }
     }
 }
-
-
-.projectList{
-
-}
-
-
 footer{
     padding: 40px;
     text-align: right;
-    border-top: 5px #ebeee8 solid;
+    border-top: 5px $color-heading solid;
 }

@@ -1,0 +1,96 @@
+//------------------------------------------------------------------------- libs
+@import "compass/css3";
+@import "compass/utilities";
+@import "compass/reset";
+//-------------------------------------------------------------------- variables
+$board-color:                               #5787d3;
+$letter-card:                               #293998;
+$letter-slot:                               #6fa1e6;
+
+
+body{
+    font: normal 14px/16px Arial;
+}
+.board{
+    margin: 0 auto;
+    width: 600px;
+    background: $board-color;
+}
+fieldset{
+    padding: 0;
+    height: 64px;
+    white-space: wrap;
+    border: 2px $board-color solid;
+}
+input{
+    padding: 13px 10px 7px;
+    margin: 2px;
+    float: left;
+    width: 40px;
+    height: 40px;
+    font: normal 40px/44px Arial;
+    text-align: center;
+    text-transform: uppercase;
+    @include border-radius(1px);
+    border: 1px darken($board-color, 15%) solid;
+    outline: none;
+    @include box-shadow(
+        0 4px darken($board-color, 5%) inset,
+        0 6px lighten($board-color, 15%) inset
+    );
+}
+
+input[type=submit],
+input[type=reset]{
+    padding: 0;
+    margin: 80px 3px 0 3px;
+    width: 60px;
+    height: 60px;
+    font-size: 12px;
+    line-height: 40px;
+    text-align: center;
+    border-color: lightBlue;
+    background: #66ccdd;
+    @include box-shadow(0 0 0);
+    cursor: pointer;
+
+    &.disabled{
+        border: 1px #aaa solid;
+        color: #aaa;
+        text-shadow: 0 1px #fff;
+        background: #ccc;
+        cursor: no-drop;
+    }
+}
+input[type=submit] {
+    margin-left: 202px;
+}
+input[type=text] {
+    @include transition(all 100ms linear);
+    background: $letter-slot;
+}
+input.val{
+    color: #fff;
+    background: $letter-card;
+
+    @include box-shadow(
+        0 4px darken($board-color, 20%) inset,
+        0 6px $board-color inset
+    );
+}
+.possibles{
+    margin-top: 20px;
+    padding: 20px;
+    width: 556px;
+    height: auto;
+    overflow: hidden;
+    white-space: pre;
+    clear: both;
+    color: #fff;
+
+    .title{
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 26px;
+    }
+}
