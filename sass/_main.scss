@@ -6,6 +6,11 @@ body{
 h1, h2, h3, h4, h5, h6, b, strong{
     font-family: $font-bold;
 }
+h2{font-size: 2em;}
+h3{font-size: 1.8em;}
+h4{font-size: 1.5em;}
+h4{font-size: 1.2em;}
+
 p{
     margin: 1.2rem 0;
 
@@ -46,7 +51,7 @@ section{
 nav{
     height: auto;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin: 20px 0 60px;
 
     a, a:visited{
         display: block;
@@ -69,13 +74,7 @@ nav{
             position: absolute;
             text-align: center;
             font-size: 80px;
-            color: rgba($color-heading, 0.1);
-        }
-        &:nth-child(3n+1) {
-            margin-left: 0;
-        }
-        &:nth-child(3n+3) {
-            margin-right: 0;
+            color: rgba($color-highlight, 0.1);
         }
         &:hover{
             background: lighten($color-background, 2%);

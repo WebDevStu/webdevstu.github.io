@@ -1,0 +1,54 @@
+
+/* all temp styles, tart up later */
+
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+body{
+    font: normal normal 14px/2em 'Arial', 'San-Serif', 'Serif';
+}
+canvas{
+    cursor: default
+}
+.pointer{
+    cursor: pointer;
+}
+.toThrow{
+    position: absolute;
+    top: 60px;
+    left: 450px;
+}
+.toThrow li{
+    display: none;
+    margin: 0 10px;
+    float: left;
+    width: 10px;
+    height: 100px;
+    list-style: none;
+    text-indent: -5000px;
+    background: url('../images/dart.png') no-repeat 50% 50%
+}
+.toThrow.throw1 li:first-child,
+.toThrow.throw2 li:nth-child(2),
+.toThrow.throw3 li:last-child {
+    display: block;
+}
+.scoreBoard{
+    position: absolute;
+    top: 20px;
+    left: 450px;
+}
+.checkout{
+    position: absolute;
+    left: 450px;
+    top: 160px;
+}
+.checkouts{
+    margin-left: 25px;
+}

@@ -99,31 +99,51 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /* line 1, ../sass/_main.scss */
 body {
-  font: normal 1em/1.6em "sourceSansLight" Helvetica, Arial;
-  color: #918f85;
+  font: normal 1em/1.6em "sourceSansLight", Helvetica, Arial;
+  color: #7e7c6f;
   background: #dbdad8;
 }
 
 /* line 6, ../sass/_main.scss */
 h1, h2, h3, h4, h5, h6, b, strong {
-  font-family: "sourceSansReg" Helvetica, Arial;
+  font-family: "sourceSansReg", Helvetica, Arial;
 }
 
 /* line 9, ../sass/_main.scss */
+h2 {
+  font-size: 2em;
+}
+
+/* line 10, ../sass/_main.scss */
+h3 {
+  font-size: 1.8em;
+}
+
+/* line 11, ../sass/_main.scss */
+h4 {
+  font-size: 1.5em;
+}
+
+/* line 12, ../sass/_main.scss */
+h4 {
+  font-size: 1.2em;
+}
+
+/* line 14, ../sass/_main.scss */
 p {
   margin: 1.2rem 0;
 }
-/* line 12, ../sass/_main.scss */
+/* line 17, ../sass/_main.scss */
 p a, p a:visited {
   color: #ae1212;
   text-decoration: none;
 }
-/* line 17, ../sass/_main.scss */
+/* line 22, ../sass/_main.scss */
 p a:hover {
   background: #d1d0cd;
 }
 
-/* line 21, ../sass/_main.scss */
+/* line 26, ../sass/_main.scss */
 section {
   position: relative;
   padding: 0 20px;
@@ -133,16 +153,16 @@ section {
   min-height: 500px;
 }
 
-/* line 29, ../sass/_main.scss */
+/* line 34, ../sass/_main.scss */
 .main {
-  font-family: "sourceSansReg" Helvetica, Arial;
+  font-family: "sourceSansReg", Helvetica, Arial;
   font-size: 5em;
   line-height: 1.2em;
   letter-spacing: -0.07em;
   color: #b8b6af;
 }
 
-/* line 36, ../sass/_main.scss */
+/* line 41, ../sass/_main.scss */
 .me {
   position: absolute;
   top: 40px;
@@ -150,18 +170,18 @@ section {
   width: 300px;
 }
 
-/* line 42, ../sass/_main.scss */
+/* line 47, ../sass/_main.scss */
 .content {
   margin: 0;
 }
 
-/* line 46, ../sass/_main.scss */
+/* line 51, ../sass/_main.scss */
 nav {
   height: auto;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin: 20px 0 60px;
 }
-/* line 51, ../sass/_main.scss */
+/* line 56, ../sass/_main.scss */
 nav a, nav a:visited {
   display: block;
   float: left;
@@ -174,7 +194,7 @@ nav a, nav a:visited {
   text-decoration: none;
   text-transform: uppercase;
   font-size: 22px;
-  font-family: "sourceSansReg" Helvetica, Arial;
+  font-family: "sourceSansReg", Helvetica, Arial;
   color: #ae1212;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -183,35 +203,27 @@ nav a, nav a:visited {
   border-radius: 8px;
   border: 5px #b8b6af solid;
 }
-/* line 68, ../sass/_main.scss */
+/* line 73, ../sass/_main.scss */
 nav a:before, nav a:visited:before {
   position: absolute;
   text-align: center;
   font-size: 80px;
-  color: rgba(184, 182, 175, 0.1);
+  color: rgba(174, 18, 18, 0.1);
 }
-/* line 74, ../sass/_main.scss */
-nav a:nth-child(3n+1), nav a:visited:nth-child(3n+1) {
-  margin-left: 0;
-}
-/* line 77, ../sass/_main.scss */
-nav a:nth-child(3n+3), nav a:visited:nth-child(3n+3) {
-  margin-right: 0;
-}
-/* line 80, ../sass/_main.scss */
+/* line 79, ../sass/_main.scss */
 nav a:hover, nav a:visited:hover {
   background: #e0dfdd;
 }
-/* line 83, ../sass/_main.scss */
+/* line 82, ../sass/_main.scss */
 nav a.selected, nav a:visited.selected {
   background: #cccbc8;
 }
-/* line 86, ../sass/_main.scss */
+/* line 85, ../sass/_main.scss */
 nav a.selected:hover, nav a:visited.selected:hover {
   background: #dbdad8;
 }
 
-/* line 92, ../sass/_main.scss */
+/* line 91, ../sass/_main.scss */
 footer {
   margin-top: 60px;
   padding: 40px;
@@ -232,23 +244,30 @@ footer {
   background: #d6d5d3;
 }
 /* line 9, ../sass/_projects.scss */
+.projects .project:before {
+  position: absolute;
+  font-size: 80px;
+  right: 40px;
+  color: rgba(174, 18, 18, 0.1);
+}
+/* line 16, ../sass/_projects.scss */
 .projects .title {
   font-size: 2em;
   color: #ae1212;
-  font-family: "sourceSansReg" Helvetica, Arial;
+  font-family: "sourceSansReg", Helvetica, Arial;
 }
-/* line 14, ../sass/_projects.scss */
+/* line 21, ../sass/_projects.scss */
 .projects .links {
   height: auto;
   overflow: hidden;
   font-size: 1.2em;
 }
-/* line 19, ../sass/_projects.scss */
+/* line 26, ../sass/_projects.scss */
 .projects .links li {
   float: left;
   margin: 0 10px 0 0;
 }
-/* line 23, ../sass/_projects.scss */
+/* line 30, ../sass/_projects.scss */
 .projects .links a, .projects .links a:visited {
   display: block;
   padding: 0 10px;
@@ -259,15 +278,15 @@ footer {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  color: #918f85;
+  color: #7e7c6f;
   background: #e0dfdd;
 }
-/* line 32, ../sass/_projects.scss */
+/* line 39, ../sass/_projects.scss */
 .projects .links a:before, .projects .links a:visited:before {
   margin-right: 10px;
   line-height: 22px;
 }
-/* line 36, ../sass/_projects.scss */
+/* line 43, ../sass/_projects.scss */
 .projects .links a:hover, .projects .links a:visited:hover {
   background: #dbdad8;
 }
