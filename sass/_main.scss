@@ -104,3 +104,22 @@ footer{
     text-align: right;
     border-top: 5px $color-heading solid;
 }
+
+
+@media #{$screen-600} {
+    body{
+        font: normal 1.2em/1.6em #{$font-regular};
+    }
+}
+
+@media #{$screen-450} {
+    body{
+        font: normal 1.8em/1.6em #{$font-regular};
+    }
+}
+
+@media #{$screen-300} {
+    body{
+        font: normal 2.6em/1.6em #{$font-regular};
+    }
+}

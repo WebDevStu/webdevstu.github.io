@@ -46,3 +46,22 @@
         }
     }
 }
+
+
+@media #{$screen-600} {
+
+}
+
+@media #{$screen-450} {
+    .projects{
+        .links{
+            a, a:visited{
+                line-height: 40px;
+            }
+        }
+    }
+}
+
+@media #{$screen-300} {
+
+}
