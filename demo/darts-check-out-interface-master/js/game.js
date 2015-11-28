@@ -11,14 +11,15 @@ LPD.Game = function () {
     // set ups
     this.score       = 501;
     this.gameDarts   = 0;
-
     // a score count for the three darts you are throwing
     this.okiScore    = [];
-
     // create scores array and populate with available scores
     this.scores = [];
+    // possibles array for storing possible finishes
+    this.possibles = [];
 
     this.scores.push(25);
+
     for (var i = 20; i > 0; i -= 1) {
         this.scores.push(i);
     }
@@ -26,8 +27,8 @@ LPD.Game = function () {
     // reset checkout - display message that one isn't ready yet
     this.resetCheckout();
 
-    // listen to events
-    _.listen('dart:thrown', this.registerScore.bind(this));
+    // listen to dart events
+    _.listen('dart:thrown', this.registerScore, this);
 };
 
 
@@ -69,11 +70,12 @@ _.extend(LPD.Game.prototype, {
 
         if (this.score < 0) {
             // bust, go back to start of three dart throw
-            this.lastOkiScore();
+            this.lastOkiScore()
+                .checkForFinish();
 
         } else if (this.score <= 170) {
             // check for finish
-            this.checkForFinish(null, dartsThrown);
+            this.checkForFinish();
         }
 
         // update board
@@ -126,191 +128,155 @@ _.extend(LPD.Game.prototype, {
     /**
      * lastOkiScore
      * if the user has gone bust then, we re-calc the previous score
+     *
+     * @returns {LPD.Game}
      */
     lastOkiScore: function () {
 
         this.score = this.score + this.getOkiScore();
 
         this.resetOki();
+
+        return this;
+    },
+
+
+    /**
+     * accumulator
+     * method for checking a score finish given an array of multipliers and many
+     * scores. returns true if the iterator needs to continue
+     *
+     * @param multipliers {Array}
+     * @param score {Number}
+     * @returns {boolean}
+     */
+    accumulator: function (multipliers, score) {
+
+        var args = _.toArray(arguments).slice(2),
+            values = args.reduce(function (value, memory) {
+                return memory + value;
+            }),
+            checkout = [],
+            one,
+            two;
+
+        if (score - values === 0) {
+
+            args.forEach(function (value, index) {
+                checkout.push({
+                    value: value / multipliers[index],
+                    multiplier: multipliers[index],
+                    score: value
+                });
+            });
+
+            one = checkout[1];
+            two = checkout[2];
+
+            if ((one && two) && (one.score < two.score)) {
+                checkout[1] = two;
+                checkout[2] = one;
+            }
+
+            this.possibles.push(checkout);
+
+            return false;
+        }
+
+        return true;
     },
 
 
     /**
      * checkForFinish
      * main method for resolving the checkout score based on dart left to throw
-     *
-     * @TODO MASSIVE OPTIMISATION NEEDED - proof of concept proved!
      */
     checkForFinish: function (score) {
 
         score = score || this.score;
 
-        var singles = this.scores.slice.call(this.scores),
-            doubles = this.scores.slice.call(this.scores).map(function (score) {
+        var singles = _.toArray(this.scores),
+            doubles = _.toArray(this.scores).map(function (score) {
                 return score * 2;
             }),
-            trebles = this.scores.slice.call(this.scores).map(function (score) {
+            trebles = _.toArray(this.scores).map(function (score) {
                 return score * 3;
-            }).slice(1),
-            possibles = [];
+            }).slice(1);
 
+        this.possibles.length = 0;
 
         // start with finding doubles
         doubles.forEach(function (double) {
 
-            // finish on this double
-            if ((score - double) === 0) {
-                possibles.push([{
-                    value: double / 2,
-                    multiplier: 2
-                }]);
-
-            } else {
+            // finish on this double - we're done
+            if (this.accumulator([2], score, double)) {
 
                 // go forward and remove a single
                 singles.forEach(function (single) {
 
-                    // finish on this double and this single
-                    if ((score - double - single) === 0) {
-                        possibles.push([{
-                            value: double / 2,
-                            multiplier: 2
-                        }, {
-                            value: single,
-                            multiplier: 1
-                        }]);
+                    if (this.accumulator([2, 1], score, double, single)) {
 
-                    } else {
+                        // finish with this double, this single and this single
+                        singles.forEach(function (single2) {
+                            this.accumulator([2, 1, 1], score, double, single, single2);
+                        }, this);
 
-                        // keep going to see if trebles play a part
+                        // finish with this double, this single and this double
+                        doubles.forEach(function (double2) {
+                            this.accumulator([2, 1, 2], score, double, single, double2);
+                        }, this);
+
+                        // finish with this double, this single and this treble
                         trebles.forEach(function (treble) {
-
-                            // finish with this double, this single and this treble
-                            if ((score - double - single - treble) === 0) {
-                                possibles.push([{
-                                    value: double / 2,
-                                    multiplier: 2
-                                }, {
-                                    value: single,
-                                    multiplier: 1
-                                }, {
-                                    value: treble / 3,
-                                    multiplier: 3
-                                }]);
-                            }
-                        });
+                            this.accumulator([2, 1, 3], score, double, single, treble);
+                        }, this);
                     }
-                });
+                }, this);
+
+
+                // lets try doubles
+                doubles.forEach(function (double2) {
+
+                    if (this.accumulator([2, 2], score, double, double2)) {
+
+                        // third double deep
+                        doubles.forEach(function (double3) {
+                            this.accumulator([2, 2, 2], score, double, double2, double3);
+                        }, this);
+                    }
+                }, this);
 
                 // finally try trebles and trebles
                 trebles.forEach(function (treble) {
 
                     // we have a finish with this double and this treble
-                    if ((score - double - treble) === 0) {
-                        possibles.push([{
-                            value: double / 2,
-                            multiplier: 2
-                        }, {
-                            value: treble / 3,
-                            multiplier: 3
-                        }]);
-
-                    } else {
-
-                        trebles.forEach(function (treble2) {
-
-                            if ((score - double - treble - treble2) === 0) {
-                                possibles.push([{
-                                    value: double / 2,
-                                    multiplier: 2
-                                }, {
-                                    value: treble / 3,
-                                    multiplier: 3
-                                }, {
-                                    value: treble2 / 3,
-                                    multiplier: 3
-                                }]);
-                            }
-                        });
+                    if (this.accumulator([2, 3], score, double, treble)) {
 
                         doubles.forEach(function (double2) {
-                            if ((score - double - treble - double2) === 0) {
-                                possibles.push([{
-                                    value: double / 2,
-                                    multiplier: 2
-                                }, {
-                                    value: treble / 3,
-                                    multiplier: 3
-                                }, {
-                                    value: double2 / 2,
-                                    multiplier: 2
-                                }]);
-                            }
-                        });
+                            this.accumulator([2, 3, 2], score, double, treble, double2);
+                        }, this);
+
+                        trebles.forEach(function (treble2) {
+                            this.accumulator([2, 3, 3], score, double, treble, treble2);
+                        }, this);
                     }
-                });
+                }, this);
             }
-        });
+        }, this);
 
         // log results
-        this.printResults(this.convertPossibles(possibles));
+        this.printResults();
     },
-
-
-    /**
-     * convertPossibles
-     * converts the possibles array into human readable
-     *
-     * @param possibles {Array}
-     * @returns {Array}
-     */
-    convertPossibles: function (possibles) {
-
-        var checkouts = [],
-            notation = [null, null, 'D', 'T'],
-            part;
-
-        possibles.forEach(function (finishArray) {
-
-            finishArray.reverse();
-            part = [];
-
-            finishArray.forEach(function (finish) {
-
-                if (finish.value === 25 && finish.multiplier === 2) {
-                    part.push('BULL');
-                } else {
-                    part.push(notation[finish.multiplier] + finish.value);
-                }
-            });
-
-            checkouts.push(part);
-        });
-
-        // lets sort and trim the results
-        checkouts.sort(function (checkoutA, checkoutB) {
-
-            if (checkoutA.length < checkoutB.length) {
-                return -1;
-            }
-
-            return 1;
-        });
-
-        return checkouts;
-    },
-
 
 
     /**
      * printResults
      * updates the DOM with all possible finishes
-     *
-     * @param checkouts
      */
-    printResults: function (checkouts) {
+    printResults: function () {
 
-        var unOrderedList = document.createElement('ul'),
+        var checkouts = this.convertPossibles(),
+            unOrderedList = document.createElement('ul'),
             listItem;
 
         checkouts.forEach(function (array) {
@@ -325,5 +291,71 @@ _.extend(LPD.Game.prototype, {
 
         _.$('checkout').innerHTML = '';
         _.$('checkout').appendChild(unOrderedList);
+    },
+
+
+    /**
+     * convertPossibles
+     * converts the possibles array into human readable
+     *
+     * @returns {Array}
+     */
+    convertPossibles: function () {
+
+        var checkouts = [],
+            notation = [null, null, 'D', 'T'],
+            checkout;
+
+        this.possibles.forEach(function (finishArray) {
+
+            finishArray.reverse();
+            checkout = [];
+
+            finishArray.forEach(function (finish) {
+
+                if (finish.value === 25 && finish.multiplier === 2) {
+                    checkout.push('BULL');
+                } else {
+                    checkout.push(notation[finish.multiplier] + finish.value);
+                }
+            });
+
+            checkouts.push(checkout);
+        });
+
+        // lets sort and trim the results
+        checkouts.sort(function (checkoutA, checkoutB) {
+
+            var firstCharA,
+                firstCharB;
+
+            if (checkoutA.length < checkoutB.length) {
+                return -1;
+            }
+
+            if (_.isString(checkoutA[0]) && _.isString(checkoutB[0])) {
+
+                firstCharA = checkoutA[0].charAt(0).toLowerCase();
+                firstCharB = checkoutB[0].charAt(0).toLowerCase();
+
+                if (firstCharA === firstCharB) {
+
+                    if (+checkoutA[0].slice(1) > +checkoutB[0].slice(1)) {
+                        return -1;
+                    }
+                    return 1;
+                }
+
+                if (firstCharA > firstCharB) {
+                    return -1;
+                }
+
+                return 1;
+            }
+
+            return -1;
+        });
+
+        return checkouts;
     }
 });
