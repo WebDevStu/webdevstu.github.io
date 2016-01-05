@@ -1,17 +1,21 @@
 /**
  * TicTacToe
+ * constructor for the class
  *
- * @param nextGame {Function}
+ * @param scores {Object} persisted scores state, pulled from storage or defaults
+ * @param nextGame {Function} callback method to start a new game
+ *
  * @constructor
  */
-var TicTacToe = function (nextGame) {
+var TicTacToe = function (scores, nextGame) {
 
+    this.scores = scores;
     this.nextGame = nextGame;
 
     this.el = document.getElementById('ticTacToe');
 
-    this.play = true;
-    this.icon = true; // false = x; true = o
+    this.gameInPlay = true;
+    this.symbol = true; // false = x; true = o
     this.squares = [];
     this.wins   = [
         [0, 1, 2],
@@ -26,14 +30,17 @@ var TicTacToe = function (nextGame) {
         [0, 4, 8]
     ];
 
-    this.buildBoard();
+    this.buildBoard()
+        .setScores();
 };
 
 
 /**
  * getSquare
+ * gets the square as indicated by the passed in index, throws out of range
+ * error.
  *
- * @param index {Number}
+ * @param index {Number} 0-8
  * @returns {Object}
  */
 TicTacToe.prototype.getSquare = function (index) {
@@ -50,25 +57,26 @@ TicTacToe.prototype.getSquare = function (index) {
 
 /**
  * getStatus
- * gets the status of a square and matches the icon in play
+ * gets the status of a square being played and matching the symbol in play
  *
  * @returns {Boolean}
  */
 TicTacToe.prototype.getStatus = function (index) {
 
     var square = this.getSquare(index),
-        icon = square.className === 'cross';
+        symbol = square.className === 'cross';
 
-     return !!square.played && (icon === this.icon);
+     return !!square.played && (symbol === this.symbol);
 };
 
 
 /**
  * getSquaresInPlay
- * gets the remaining squares in play that haven't been played
+ * gets the remaining squares in play that haven't been played, optional param
+ * to only return the counts
  *
- * @param counts {Boolean}
- * @returns {Number}
+ * @param counts {Boolean} !optional
+ * @returns {Number|Array} either the total counts or an array of squares
  */
 TicTacToe.prototype.getSquaresInPlay = function (counts) {
 
@@ -88,7 +96,9 @@ TicTacToe.prototype.getSquaresInPlay = function (counts) {
  * getRandom
  * randomly selects an un-played square
  *
- * @returns {string}
+ * @TODO this method needs to use the AI class to work out where the user will play next o_O
+ *
+ * @returns {number}
  */
 TicTacToe.prototype.getRandom = function () {
 
@@ -96,7 +106,7 @@ TicTacToe.prototype.getRandom = function () {
         rand = Math.round(Math.random() * (squaresLeft.length - 1));
 
     if (squaresLeft[rand]) {
-        return squaresLeft[rand].getAttribute('data-index');
+        return +squaresLeft[rand].getAttribute('data-index');
     }
 };
 
@@ -107,22 +117,22 @@ TicTacToe.prototype.getRandom = function () {
  *
  * @returns {string}
  */
-TicTacToe.prototype.getCompleteText = function () {
+TicTacToe.prototype.getCompleteText = function (win) {
 
-    var icon = this.icon ? 'crosses' : 'noughts',
-        text = 'Game over, ' + icon + ' win this time. \n',
-        squaresLeft = this.getSquaresInPlay(true);
+    var symbol = this.symbol ? 'crosses' : 'noughts';
 
-    if (!squaresLeft) {
-        text = 'No winner this time. \n';
+    if (!win) {
+        return 'No winner this time. \n';
     }
 
-    return text;
+    return 'Game over, ' + symbol + ' win this time. \n';
 };
 
 
 /**
  * buildBoard
+ * creates all the dom elements for the game to start and bind events to the
+ * squares
  *
  * @returns TicTacToe {Object}
  */
@@ -142,7 +152,7 @@ TicTacToe.prototype.buildBoard = function () {
 
         item.addEventListener('click', function (evt) {
 
-            if (tictactoe.play) {
+            if (tictactoe.gameInPlay) {
                 tictactoe.playSquare.call(tictactoe, evt);
             }
         }, false);
@@ -163,8 +173,8 @@ TicTacToe.prototype.buildBoard = function () {
  * playSquare
  * event handler for when a square is clicked
  *
- * @param evt {Event.Object} !optional
- * @param index {Number} !optional
+ * @param evt {Event.Object} !optional if sending through index
+ * @param index {Number} !optional if event handler
  */
 TicTacToe.prototype.playSquare = function (evt, index) {
 
@@ -178,7 +188,7 @@ TicTacToe.prototype.playSquare = function (evt, index) {
         return;
     }
 
-    if (this.icon) {
+    if (this.symbol) {
         square.classList.add('cross');
         square.cross = true;
     } else {
@@ -199,7 +209,7 @@ TicTacToe.prototype.playSquare = function (evt, index) {
  */
 TicTacToe.prototype.checkForWin = function (index) {
 
-    var accumulative,
+    var winningLine,
         gameOver = false,
         squaresLeft = this.getSquaresInPlay(true);
 
@@ -208,7 +218,7 @@ TicTacToe.prototype.checkForWin = function (index) {
     // iterate the possibles to check for win
     this.wins.forEach(function (wins) {
 
-        accumulative = true;
+        winningLine = true;
 
         if (wins.indexOf(index) < 0 || gameOver) {
             return;
@@ -216,48 +226,23 @@ TicTacToe.prototype.checkForWin = function (index) {
 
         wins.forEach(function (win) {
             if (!this.getStatus(win)) {
-                accumulative = false;
+                winningLine = false;
             }
         }, this);
 
-        if (accumulative || !squaresLeft) {
-            gameOver = this.gameOver();
+        if (winningLine || !squaresLeft) {
+            gameOver = this.gameOver(winningLine);
         }
     }, this);
 
     // only swap to next player if game still in play
-    if (this.play) {
-        this.icon = !this.icon;
+    if (this.gameInPlay) {
+        this.symbol = !this.symbol;
 
-        if (!this.icon) {
+        if (!this.symbol) {
             this.computerTurn();
         }
     }
-};
-
-
-/**
- * gameOver
- * stops play
- */
-TicTacToe.prototype.gameOver = function () {
-
-    var score = document.createElement('div'),
-        button = document.createElement('button');
-
-    this.play = false;
-
-    button.innerText = 'Play Again';
-
-    score.className = 'score';
-    score.innerText = this.getCompleteText();
-    score.appendChild(button);
-
-    this.el.appendChild(score);
-
-    button.addEventListener('click', this.nextGame, false);
-
-    return this;
 };
 
 
@@ -267,48 +252,146 @@ TicTacToe.prototype.gameOver = function () {
  */
 TicTacToe.prototype.computerTurn = function () {
 
-    var play = null;
+    // find possible nought win
+    var nextMove = this.getNextPlayable('nought');
+
+    // if no win possible check for user win and block
+    if (!nextMove) {
+        nextMove = this.getNextPlayable('cross');
+
+        // if play still not set - select a random position
+        if (!nextMove) {
+            nextMove = this.getRandom();
+        }
+    }
+
+    // play chosen square
+    this.playSquare(null, nextMove);
+};
+
+
+/**
+ * getNextPlayable
+ * iterates the possible wins and returns a play square to play next
+ *
+ * @param className {String}
+ * @returns {*}
+ */
+TicTacToe.prototype.getNextPlayable = function (className) {
+
+    var squareToPlay = null,
+        winningSquare,
+        playedCount,
+        marker,
+        square;
 
     this.wins.forEach(function (wins) {
 
-        var userWin = 0,
-            userMarker = null,
-            played = 0;
+        winningSquare = 0;
+        marker = null;
+        playedCount = 0;
 
         wins.forEach(function (win) {
 
-            var square = this.getSquare(win);
+            square = this.getSquare(win);
 
             if (square.played) {
-                played += 1;
+                playedCount += 1;
             }
 
-            if (square.className === 'cross') {
-                userWin += 1;
+            if (square.className === className) {
+                winningSquare += 1;
             } else {
-                userMarker = win;
+                marker = win;
             }
         }, this);
 
-        if (userWin === 2 && played < 3) {
-            play = userMarker || null;
+        if (winningSquare === 2 && playedCount < 3) {
+            squareToPlay = marker || null;
         }
     }, this);
 
-    play = (play === null) ? this.getRandom() : play;
-
-    this.playSquare(null, play);
-
-    // maybe put a small delay on the move, so as to emulate the computer is
-    // thinking about the move
+    return squareToPlay;
 };
 
 
+/**
+ * gameOver
+ * stops play
+ *
+ * @param win {Boolean} is there a win on the board
+ */
+TicTacToe.prototype.gameOver = function (win) {
 
-// loop for continual play
-var newGame = function () {
-    return new TicTacToe(newGame);
+    var score = document.createElement('div'),
+        button = document.createElement('button');
+
+    button.innerText = 'Play Again';
+    button.addEventListener('click', this.nextGame, false);
+
+    score.className = 'message';
+    score.innerText = this.getCompleteText(win);
+    score.appendChild(button);
+
+    this.el.appendChild(score);
+
+    this.updateScores(win);
+    this.gameInPlay = false;
+
+    return this;
 };
 
-// start the game
+
+/**
+ * updateScores
+ * updates the dom with the winning score
+ *
+ * @param win {Boolean}
+ */
+TicTacToe.prototype.updateScores = function (win) {
+
+    var winner = 'ties';
+
+    if (win) {
+        winner = this.symbol ? 'you' : 'computer';
+    }
+
+    this.scores[winner] += 1;
+    this.setScores();
+
+    localStorage.setItem('scores', JSON.stringify(this.scores));
+};
+
+
+/**
+ * setScores
+ * sets the scores to the DOM
+ */
+TicTacToe.prototype.setScores = function () {
+
+    var prop;
+
+    for (prop in this.scores) {
+        if (this.scores.hasOwnProperty(prop)) {
+            document.querySelector('.' + prop).innerHTML = this.scores[prop];
+        }
+    }
+};
+
+
+// instantiate the class and start the game
+var saved = localStorage.getItem('scores'),
+    defaults = {
+        you: 0,
+        ties: 0,
+        computer: 0
+    },
+    scores = saved ? JSON.parse(saved) : defaults,
+
+    // loop for continual play
+    newGame = function () {
+        return new TicTacToe(scores, newGame);
+    };
+
+// start the game loop
 newGame();
