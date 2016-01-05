@@ -3,11 +3,14 @@ $font-regular:          'sourceSansLight', Helvetica, Arial;
 $font-bold:             'sourceSansReg', Helvetica, Arial;
 $font-icon:             'icons';
 
-$color-background:      #dbdad8;
-$color-font:            #7e7c6f;
-$color-heading:         lighten(#6d6b61, 30%);
-
-$color-highlight:       #ae1212;
+//$color-background:      lighten(#dbdad8, 10%);
+$color-background:      #111;
+//$color-font:            #7e7c6f;
+$color-font:            #999;
+//$color-heading:         lighten(#6d6b61, 40%);
+$color-heading:         #222;
+//$color-highlight:       #ae1212;
+$color-highlight:       orange;
 
 
 $screen-600:            'screen and (max-width: 600px), screen and (max-device-width: 600px)';
