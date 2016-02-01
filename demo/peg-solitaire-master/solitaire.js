@@ -45,6 +45,40 @@ Solitaire.prototype.bindEvents = function () {
 
 
 /**
+ * setSelected
+ *
+ * @param el {Object}
+ * @returns {Solitaire}
+ */
+Solitaire.prototype.setSelected = function (el) {
+
+    el.className = el.className + ' selected';
+
+    this.selected = el;
+    this.getPossibles(el.getAttribute('data-ball'));
+
+    return this;
+};
+
+
+/**
+ * unsetSelected
+ *
+ * @param el {Object}
+ * @returns {Solitaire}
+ */
+Solitaire.prototype.unsetSelected = function (el) {
+
+    el.className = el.className.replace(/\ selected/g, '');
+
+    this.selected = null;
+    this.possibles.length = 0;
+
+    return this;
+};
+
+
+/**
  * callback method from clicking on a ball in play
  *
  * @param evt {Event}
@@ -59,19 +93,21 @@ Solitaire.prototype.click = function (evt) {
 
         // remove selected if set and clicked
         if (clicked.className.match(/selected/g)) {
-            clicked.className = clicked.className.replace(/\ selected/g, '');
-
-            this.selected = null;
-            this.possibles.length = 0;
-
-            return;
+            return this.unsetSelected(clicked);
         }
 
         // check if in possibles array
         if (this.possibles.indexOf(gridPos) !== -1) {
             this.removeBall(gridPos);
-        }
+        } else {
 
+            if (clicked.className.match(/empty/g)) {
+                return;
+            }
+
+            this.unsetSelected(this.selected)
+                .setSelected(clicked);
+        }
     } else {
 
         // check for a ball in the hole
@@ -79,11 +115,7 @@ Solitaire.prototype.click = function (evt) {
             return;
         }
 
-        clicked.className = clicked.className + ' selected';
-
-        this.selected = clicked;
-
-        this.getPossibles(gridPos);
+        this.setSelected(clicked);
     }
 };
 

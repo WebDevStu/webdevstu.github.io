@@ -1,0 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #b1b9a5;
+}
+.board{
+    display: block;
+    margin: 50px auto;
+    width: 400px;
+    height: 300px;
+    border: 10px #363b37 solid;
+}
