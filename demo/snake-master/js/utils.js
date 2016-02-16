@@ -101,11 +101,16 @@ var _ = {
     /**
      * random
      *
-     * @param limit {Number}
+     * @param min {Number}
+     * @param max {Number}
      * @param rounding {Number}
      * @returns {Number}
      */
-    random: function (limit, rounding) {
-        return Math.round((Math.random() * limit) / rounding) * rounding;
+    random: function (min, max, rounding) {
+
+        var rand = Math.floor(Math.random() * (max - min + 1) + min);
+
+        return Math.round(rand / rounding) * rounding;
+
     }
 };

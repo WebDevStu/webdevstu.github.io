@@ -1,47 +1,67 @@
 
+// plan: self play - resolve and get all possible board finishes?
+// make this a factory
 
+/**
+ * ai - to track each posible finish for the computer
+ * @method
+ * @returns {object}
+ */
+var ai = (function () {
 
-var AiInstance = null,
-
-    /**
-     * AI
-     * AI class, the aim is to track the users actions and guess the most likely
-     * box or pattern of boxes they are likely to place their noughts/crosses
-     *
-     * @constructor
-     */
-    AI = function (x) {
-
-
-        /**
-         * actual class constructor
-         * @constructor
-         */
-        var Singleton = function () {
-
-            this.x = x;
+    // private methods
+    var _possibles = [],
+        _hash = function (array) {
 
         };
 
-        // ony return the instance
-        return (function () {
+    // exposed returned object
+    return {
 
-            if (AiInstance === null) {
-                AiInstance = new Singleton();
-            }
+        get: function () {
 
-            return AiInstance;
-        } ());
+        },
+
+
+
+        findEveryWin: function () {
+
+            var finishesLeft = true;
+
+            // 9 squares
+            // unique arrays
+            // [1, 0, 1, 0, 1, 0, 1, 0, 1]
+            // [null, 0, null, 0, null, 0, 1, 1, 1]
+            // [null, 1, 1, 0, 1, 0, 0, 0...
+            //
+            //
+
+            // console.log(ai.getCombinations([[], [], []]));
+        },
+
+
+        getCombinations: function (array) {
+
+            var results = [],
+                types = [0, 1, -1],
+                clone;
+
+
+            types.forEach(function (type) {
+
+                array.forEach(function (accumulative) {
+                    clone = accumulative.slice(0);
+                    clone.push(type);
+                    array.push(clone);
+                });
+
+            });
+
+
+
+            return array;
+        }
+
+
     };
-
-
-
-// test singleton
-var one = new AI('foo'),
-    two = new AI('bar');
-
-
-//console.log(one, two);
-
-
-
+} ());

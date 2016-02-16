@@ -101,7 +101,7 @@ Snake.prototype.createSegment = function (x, y) {
     y = (typeof y === 'number') ? y : 150;
 
     this.ctx.beginPath();
-    this.ctx.rect(x, y, 10, 10);
+    this.ctx.rect(x, y, 9, 9);
     this.ctx.fillStyle = 'black';
     this.ctx.fill();
 };

@@ -4,34 +4,45 @@
  *
  * @param scores {Object} persisted scores state, pulled from storage or defaults
  * @param nextGame {Function} callback method to start a new game
+ * @param isComputersTurn {Boolean}
  *
  * @constructor
  */
-var TicTacToe = function (scores, nextGame) {
+var TicTacToe = function (scores, nextGame, isComputersTurn) {
 
     this.scores = scores;
     this.nextGame = nextGame;
 
+    // this.ai = ai;
+    // this.ai.findEveryWin();
+
     this.el = document.getElementById('ticTacToe');
 
     this.gameInPlay = true;
-    this.symbol = true; // false = x; true = o
+    this.symbol = true; // false = `x`; true = `o`
     this.squares = [];
     this.wins   = [
+        // horizontal
         [0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
-
+        // vertical
         [0, 3, 6],
         [1, 4, 7],
         [2, 5, 8],
-
+        // diagonal
         [6, 4, 2],
         [0, 4, 8]
     ];
 
     this.buildBoard()
         .setScores();
+
+    // swap for computer turn
+    if (isComputersTurn) {
+        this.symbol = false;
+        this.computerTurn();
+    }
 };
 
 
@@ -141,21 +152,22 @@ TicTacToe.prototype.buildBoard = function () {
     var tictactoe = this,
         list = document.createElement('ul'),
         item,
-        i;
+        i,
+        eventHandler = function (evt) {
 
+            if (tictactoe.gameInPlay) {
+                tictactoe.playSquare.call(tictactoe, evt);
+            }
+        };
+
+    this.scoreEl = document.createElement('div');
     list.className = 'tictactoe';
 
     for (i = 0; i < 9; i += 1) {
 
         item = document.createElement('li');
         item.setAttribute('data-index', i);
-
-        item.addEventListener('click', function (evt) {
-
-            if (tictactoe.gameInPlay) {
-                tictactoe.playSquare.call(tictactoe, evt);
-            }
-        }, false);
+        item.addEventListener('click', eventHandler, false);
 
         this.squares.push(item);
 
@@ -164,6 +176,7 @@ TicTacToe.prototype.buildBoard = function () {
 
     this.el.innerHTML = '';
     this.el.appendChild(list);
+    this.el.appendChild(this.scoreEl);
 
     return this;
 };
@@ -184,19 +197,18 @@ TicTacToe.prototype.playSquare = function (evt, index) {
 
     square = this.getSquare(index);
 
-    if (square.played) {
-        return;
-    }
+    if (!square.played) {
 
-    if (this.symbol) {
-        square.classList.add('cross');
-        square.cross = true;
-    } else {
-        square.classList.add('nought');
-        square.nought = true;
-    }
+        if (this.symbol) {
+            square.classList.add('cross');
+            square.cross = true;
+        } else {
+            square.classList.add('nought');
+            square.nought = true;
+        }
 
-    square.played = true;
+        square.played = true;
+    }
 
     this.checkForWin(index);
 };
@@ -220,7 +232,7 @@ TicTacToe.prototype.checkForWin = function (index) {
 
         winningLine = true;
 
-        if (wins.indexOf(index) < 0 || gameOver) {
+        if (wins.indexOf(index) < 0) {
             return;
         }
 
@@ -333,7 +345,8 @@ TicTacToe.prototype.gameOver = function (win) {
     score.innerText = this.getCompleteText(win);
     score.appendChild(button);
 
-    this.el.appendChild(score);
+    this.scoreEl.innerHTML = '';
+    this.scoreEl.appendChild(score);
 
     this.updateScores(win);
     this.gameInPlay = false;
@@ -379,6 +392,8 @@ TicTacToe.prototype.setScores = function () {
 };
 
 
+
+
 // instantiate the class and start the game
 var saved = localStorage.getItem('scores'),
     defaults = {
@@ -387,10 +402,14 @@ var saved = localStorage.getItem('scores'),
         computer: 0
     },
     scores = saved ? JSON.parse(saved) : defaults,
+    isComputersTurn = true,
 
     // loop for continual play
     newGame = function () {
-        return new TicTacToe(scores, newGame);
+
+        isComputersTurn = !isComputersTurn;
+
+        return new TicTacToe(scores, newGame, isComputersTurn);
     };
 
 // start the game loop
