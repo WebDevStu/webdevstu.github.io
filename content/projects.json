@@ -1,0 +1,59 @@
+[
+    {
+        "id": "countdown",
+        "title": "Countdown",
+        "content": [
+            "The idea for this project came after watching 8 out of 10 Cats does countdown and failing miserably at getting anywhere near a respectable word count. What do you do as a software engineer?? You automate!",
+            "There is a UI to allow you to enter characters and returns the largest word in the [Apple] dictionary."
+        ],
+        "demo": "-master"
+    },
+    {
+        "id": "darts-check-out-interface",
+        "title": "501 Darts Finisher",
+        "content": [
+            "A game that works out what darts are available for you to throw to compete a 501 game of darts. Always finishing on a double. There is an interface to select the darts you throw to keep track of your score."
+        ],
+        "demo": "-master"
+    },
+    {
+        "id": "projecteuler",
+        "title": "Project Euler",
+        "content": [
+            "A fall back project, to coin the description from project Eulers website"
+        ],
+        "quote": "Project Euler is a series of challenging mathematical/computer programming problems that will require more than just mathematical insights to solve. Although mathematics will help you arrive at elegant and efficient methods, the use of a computer and programming skills will be required to solve most problems.",
+        "link": "https://projecteuler.net/"
+    },
+    {
+        "id": "snakes-and-ladders",
+        "title": "Snake & Ladders",
+        "content": [
+            "A friends tech test the criteria was to construct a game of snakes and ladders, random throw of the dice and certain conditions to fall on a snake or on a ladder."
+        ]
+    },
+    {
+        "id": "space-invaders",
+        "title": "Space Invaders",
+        "content": [
+            "Playing about with canvas rendering, still work in progress, with a lot of functionality to add, currently you control the space ship and can shoot aliens down."
+        ],
+        "demo": "-master"
+    },
+    {
+        "id": "tictactoe",
+        "title": "Tic Tac Toe",
+        "content": [
+            "Simple game recreated - currently work in progress, the computers turn only aims to block your moves. Plan to store which squares the user plays most to second guess the moves you will make..."
+        ],
+        "demo": "-master"
+    },
+    {
+        "id": "snake",
+        "title": "Snake",
+        "content": [
+            "The game I wasted so much time on, on my old nokia phone. Currently work in progress."
+        ],
+        "demo": "-master"
+    }
+]
