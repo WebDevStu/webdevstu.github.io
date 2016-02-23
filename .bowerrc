@@ -1,4 +1,4 @@
 {
-    "directory":            "js/components/",
-    "componentsDirectory":  "js/components/"
+    "directory":            "js/bower/",
+    "componentsDirectory":  "js/bower/"
 }
