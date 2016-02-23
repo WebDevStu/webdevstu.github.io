@@ -4,7 +4,7 @@
  * @method fetch
  * @returns {Object}   [object of exposed methods]
  */
-const fetch = (() => {
+module.exports = (() => {
 
     // privates
     let _store = {},

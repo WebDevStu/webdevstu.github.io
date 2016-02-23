@@ -6,7 +6,7 @@
  * @method fetch
  * @returns {Object}   [object of exposed methods]
  */
-var fetch = function () {
+module.exports = function () {
 
     // privates
     var _store = {},
