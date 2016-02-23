@@ -1,5 +1,5 @@
 
-;(function () {
+;(() => {
 
     let app;
 
@@ -10,4 +10,4 @@
         console.log(config);
     });
 
-} ());
+}) ();
