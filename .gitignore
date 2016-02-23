@@ -1,5 +1,6 @@
 .DS_Store
 .sass-cache/
 js/components/
+node_modules
 tags
 index-old.html

@@ -1,0 +1,23 @@
+{
+  "name": "stewart-anderson.co.uk",
+  "version": "1.0.0",
+  "description": "My site :P",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WebDevStu/webdevstu.github.io.git"
+  },
+  "author": "Stewart Anderson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WebDevStu/webdevstu.github.io/issues"
+  },
+  "homepage": "https://github.com/WebDevStu/webdevstu.github.io",
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-preset-es2015": "^6.5.0"
+  }
+}

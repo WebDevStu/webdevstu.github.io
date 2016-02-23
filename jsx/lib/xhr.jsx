@@ -1,6 +1,6 @@
-'use strict';
 
-var fetch = function fetch(url, options) {
+
+var fetch = function (url, options) {
 
     return new Promise(function (resolve, reject) {
 
@@ -17,5 +17,6 @@ var fetch = function fetch(url, options) {
         };
 
         xhr.send();
+        
     });
 };
