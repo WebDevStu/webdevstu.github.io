@@ -1,5 +1,9 @@
-
-
+/**
+ * main fetch object (overwrites native fetch if you've got it)
+ *
+ * @method fetch
+ * @returns {Object}   [object of exposed methods]
+ */
 const fetch = (() => {
 
     // privates
@@ -29,7 +33,6 @@ const fetch = (() => {
                 };
 
                 xhr.send();
-
             });
         },
 
@@ -87,6 +90,7 @@ const fetch = (() => {
             // @TODO
             console.error('error', response);
         };
+
 
     // exposed methods
     return {

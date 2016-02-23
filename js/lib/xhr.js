@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * main fetch object (overwrites native fetch if you've got it)
+ *
+ * @method fetch
+ * @returns {Object}   [object of exposed methods]
+ */
 var fetch = function () {
 
     // privates

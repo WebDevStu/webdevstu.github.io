@@ -9,5 +9,4 @@
 
         console.log(config);
     });
-
 }) ();
