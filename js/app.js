@@ -18,6 +18,6 @@
         console.log(config);
 
         Layout.render(document.getElementById('content'));
-        Navigation.render(config.content, document.getElementById('content'));
+        Navigation.render(config, document.getElementById('content'));
     });
 })();

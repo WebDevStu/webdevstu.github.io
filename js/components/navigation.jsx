@@ -2,15 +2,13 @@
 var React = require('react'),
     ReactDOM = require('react-dom'),
     Navigation = React.createClass({
+
         render: function () {
-
-            var content = [];
-
             return (
                 <nav>
                     {
-                        this.props.map(function () {
-                            return <a href={href} data-icon={icon}>{nav}</a>;
+                        this.props.content.map(function (item) {
+                            return <a href={item.href} data-icon={item.icon} key={item.id}>{item.nav}</a>;
                         })
                     }
                 </nav>

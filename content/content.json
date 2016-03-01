@@ -1,6 +1,7 @@
 [
     {
         "id": "projects",
+        "icon": "\uf02c",
         "href": "/",
         "nav": "Projects",
         "title": "Projects",
@@ -10,6 +11,7 @@
     },
     {
         "id": "aboutme",
+        "icon": "\ue601",
         "href": "/about-me",
         "nav": "About",
         "title": "Who are you?",
@@ -20,11 +22,13 @@
     },
     {
         "id": "github",
+        "icon": "\uf09b",
         "href": "https://github.com/WebDevStu/",
         "nav": "GitHub"
     },
     {
         "id": "twitter",
+        "icon": "\uf099",
         "href": "https://twitter.com/WebDevStu",
         "nav": "Twitter"
     }

@@ -19,7 +19,7 @@
         console.log(config);
 
         Layout.render(document.getElementById('content'));
-        Navigation.render(config.content, document.getElementById('content'));
+        Navigation.render(config, document.getElementById('content'));
     });
 })();
 
@@ -48,15 +48,13 @@ module.exports = {
 var React = require('react'),
     ReactDOM = require('react-dom'),
     Navigation = React.createClass({displayName: "Navigation",
+
         render: function () {
-
-            var content = [];
-
             return (
                 React.createElement("nav", null, 
                     
-                        this.props.map(function () {
-                            return React.createElement("a", {href: href, "data-icon": icon}, nav);
+                        this.props.content.map(function (item) {
+                            return React.createElement("a", {href: item.href, "data-icon": item.icon, key: item.id}, item.nav);
                         })
                     
                 )
