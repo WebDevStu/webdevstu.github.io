@@ -1,25 +1,18 @@
-/**
-  * @jsx React.DOM
-  */
-
-var Layout = React.createClass({
-  render: function () {
-      return (
-          <div className="layout">
-              yolo fish
-          </div>
-      );
-  }
-});
-
-
-console.log('yolo');
+/** @jsx React.DOM */
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    Layout = React.createClass({
+        render: function () {
+            return (
+                <div className="layout">
+                    lol
+                </div>
+            );
+        }
+    });
 
 module.exports = {
-    render: function () {
-        ReactDOM.render(
-          <Layout />,
-          document.getElementById('content')
-        );
+    render: function (el) {
+        return ReactDOM.render(<Layout />, el);
     }
 };

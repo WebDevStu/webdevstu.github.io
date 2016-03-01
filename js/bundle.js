@@ -3,26 +3,74 @@
 
 ;(function () {
 
+    // constants
     var React = require('react');
-    // Here we put our React instance to the global scope. Make sure you do not put it
-    // into production and make sure that you close and open your console if the
-    // DEV-TOOLS does not display
-    window.React = React;
-
+    var ReactDOM = require('react-dom');
     var fetch = require('./lib/xhr');
-
-    // let layout = require('./components/layout.jsx');
+    // ref in global scope
+    window.React = React;
+    // compnents
+    var Layout = require('./components/layout.jsx'),
+        Navigation = require('./components/navigation.jsx');
 
     // fetch all dependencies
     fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
 
         console.log(config);
-    });
 
-    console.log('rofl');
+        Layout.render(document.getElementById('content'));
+        Navigation.render(config.content, document.getElementById('content'));
+    });
 })();
 
-},{"./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js":[function(require,module,exports){
+},{"./components/layout.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/layout.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/layout.jsx":[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    Layout = React.createClass({displayName: "Layout",
+        render: function () {
+            return (
+                React.createElement("div", {className: "layout"}, 
+                    "lol"
+                )
+            );
+        }
+    });
+
+module.exports = {
+    render: function (el) {
+        return ReactDOM.render(React.createElement(Layout, null), el);
+    }
+};
+
+},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx":[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    Navigation = React.createClass({displayName: "Navigation",
+        render: function () {
+
+            var content = [];
+
+            return (
+                React.createElement("nav", null, 
+                    
+                        this.props.map(function () {
+                            return React.createElement("a", {href: href, "data-icon": icon}, nav);
+                        })
+                    
+                )
+            );
+        }
+    });
+
+module.exports = {
+    render: function (props, el) {
+        return ReactDOM.render(React.createElement(Navigation, React.__spread({},  props)), el);
+    }
+};
+
+},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -246,7 +294,12 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/lib/AutoFocusUtils.js":[function(require,module,exports){
+},{}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js":[function(require,module,exports){
+'use strict';
+
+module.exports = require('react/lib/ReactDOM');
+
+},{"react/lib/ReactDOM":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/lib/ReactDOM.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/lib/AutoFocusUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.

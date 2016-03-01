@@ -2,21 +2,22 @@
 
 ;(function () {
 
+    // constants
     var React = require('react');
-    // Here we put our React instance to the global scope. Make sure you do not put it
-    // into production and make sure that you close and open your console if the
-    // DEV-TOOLS does not display
-    window.React = React;
-
+    var ReactDOM = require('react-dom');
     var fetch = require('./lib/xhr');
-
-    // let layout = require('./components/layout.jsx');
+    // ref in global scope
+    window.React = React;
+    // compnents
+    var Layout = require('./components/layout.jsx'),
+        Navigation = require('./components/navigation.jsx');
 
     // fetch all dependencies
     fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
 
         console.log(config);
-    });
 
-    console.log('rofl');
+        Layout.render(document.getElementById('content'));
+        Navigation.render(config.content, document.getElementById('content'));
+    });
 })();
