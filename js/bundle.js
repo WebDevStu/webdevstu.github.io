@@ -4,34 +4,42 @@
 ;(function () {
 
     // constants
-    var React = require('react');
-    var ReactDOM = require('react-dom');
-    var fetch = require('./lib/xhr');
+    var $ = function $(id) {
+        return document.getElementById(id);
+    },
+        React = require('react'),
+        ReactDOM = require('react-dom'),
+        fetch = require('./lib/xhr'),
+
+    // compnents
+    Navigation = require('./components/navigation.jsx'),
+        Footer = require('./components/footer.jsx');
+
     // ref in global scope
     window.React = React;
-    // compnents
-    var Layout = require('./components/layout.jsx'),
-        Navigation = require('./components/navigation.jsx');
 
     // fetch all dependencies
     fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
 
-        console.log(config);
+        Navigation.render(config, $('nav'));
+        Footer.render($('footer'));
 
-        Layout.render(document.getElementById('content'));
-        Navigation.render(config, document.getElementById('content'));
+        // TODO: make route handler
     });
 })();
 
-},{"./components/layout.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/layout.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/layout.jsx":[function(require,module,exports){
+},{"./components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react'),
     ReactDOM = require('react-dom'),
-    Layout = React.createClass({displayName: "Layout",
+    Footer = React.createClass({displayName: "Footer",
+
         render: function () {
+
+            var year = new Date().getFullYear();
             return (
-                React.createElement("div", {className: "layout"}, 
-                    "lol"
+                React.createElement("span", null, 
+                    "Stewart Anderson ", year
                 )
             );
         }
@@ -39,7 +47,7 @@ var React = require('react'),
 
 module.exports = {
     render: function (el) {
-        return ReactDOM.render(React.createElement(Layout, null), el);
+        return ReactDOM.render(React.createElement(Footer, null), el);
     }
 };
 

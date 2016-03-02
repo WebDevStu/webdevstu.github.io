@@ -3,21 +3,26 @@
 ;(function () {
 
     // constants
-    var React = require('react');
-    var ReactDOM = require('react-dom');
-    var fetch = require('./lib/xhr');
+    var $ = function $(id) {
+        return document.getElementById(id);
+    },
+        React = require('react'),
+        ReactDOM = require('react-dom'),
+        fetch = require('./lib/xhr'),
+
+    // compnents
+    Navigation = require('./components/navigation.jsx'),
+        Footer = require('./components/footer.jsx');
+
     // ref in global scope
     window.React = React;
-    // compnents
-    var Layout = require('./components/layout.jsx'),
-        Navigation = require('./components/navigation.jsx');
 
     // fetch all dependencies
     fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
 
-        console.log(config);
+        Navigation.render(config, $('nav'));
+        Footer.render($('footer'));
 
-        Layout.render(document.getElementById('content'));
-        Navigation.render(config, document.getElementById('content'));
+        // TODO: make route handler
     });
 })();

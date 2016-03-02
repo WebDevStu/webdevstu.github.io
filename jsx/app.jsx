@@ -2,21 +2,25 @@
 ;(() => {
 
     // constants
-    const React     = require('react');
-    const ReactDOM  = require('react-dom');
-    const fetch     = require('./lib/xhr');
+    const $ = function (id) {
+            return document.getElementById(id);
+        },
+        React       = require('react'),
+        ReactDOM    = require('react-dom'),
+        fetch       = require('./lib/xhr'),
+        // compnents
+        Navigation  = require('./components/navigation.jsx'),
+        Footer      = require('./components/footer.jsx');
+
     // ref in global scope
-    window.React    = React;
-    // compnents
-    let Layout      = require('./components/layout.jsx'),
-        Navigation  = require('./components/navigation.jsx');
+    window.React = React;
 
     // fetch all dependencies
     fetch.get(['/content/projects.json', '/content/content.json']).then((config) => {
 
-        console.log(config);
+        Navigation.render(config, $('nav'));
+        Footer.render($('footer'));
 
-        Layout.render(document.getElementById('content'));
-        Navigation.render(config, document.getElementById('content'));
+        // TODO: make route handler
     });
 }) ();

@@ -1,18 +1,20 @@
 /** @jsx React.DOM */
 var React = require('react'),
     ReactDOM = require('react-dom'),
-    Layout = React.createClass({
+    Footer = React.createClass({
+
         render: function () {
+
+            var year = new Date().getFullYear();
+            
             return (
-                <div className="layout">
-                    lol
-                </div>
+                &copy; Stewart Anderson {year}
             );
         }
     });
 
 module.exports = {
     render: function (el) {
-        return ReactDOM.render(<Layout />, el);
+        return ReactDOM.render(<Footer />, el);
     }
 };
