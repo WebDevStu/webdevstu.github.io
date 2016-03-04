@@ -13,6 +13,7 @@
 
     // compnents
     Navigation = require('./components/navigation.jsx'),
+        Projects = require('./components/projects.jsx'),
         Footer = require('./components/footer.jsx');
 
     // ref in global scope
@@ -22,13 +23,14 @@
     fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
 
         Navigation.render(config, $('nav'));
+        Projects.render(config, $('projects'));
         Footer.render($('footer'));
 
         // TODO: make route handler
     });
 })();
 
-},{"./components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx":[function(require,module,exports){
+},{"./components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./components/projects.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/projects.jsx","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react'),
     ReactDOM = require('react-dom'),
@@ -37,10 +39,9 @@ var React = require('react'),
         render: function () {
 
             var year = new Date().getFullYear();
+
             return (
-                React.createElement("span", null, 
-                    "Stewart Anderson ", year
-                )
+                React.createElement("span", null, "© Stewart Anderson ", year)
             );
         }
     });
@@ -73,6 +74,65 @@ var React = require('react'),
 module.exports = {
     render: function (props, el) {
         return ReactDOM.render(React.createElement(Navigation, React.__spread({},  props)), el);
+    }
+};
+
+},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/projects.jsx":[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+
+    /**
+     * project iterator
+     *
+     * @method  createClass
+     */
+    Project = React.createClass({displayName: "Project",
+
+        render: function () {
+            return (
+                React.createElement("li", {className: "project", "data-icon": ""}, 
+                    React.createElement("h5", {className: "title"}, this.props.project.title), 
+
+                    
+                        this.props.project.content.map(function (content, index) {
+                            return React.createElement("p", {key: index}, content);
+                        }), 
+                    
+
+                    React.createElement("ul", {className: "links"}, 
+                        React.createElement("li", null, React.createElement("a", {href: "https://github.com/WebDevStu/{project.id}", "data-icon": ""}, "GitHub")), 
+                        React.createElement("li", null, React.createElement("a", {href: "/demo/{project.id}{project.demo}", "data-icon": ""}, "Demo"))
+                    )
+                )
+            );
+        }
+    }),
+
+    /**
+     * main project wrapper
+     *
+     * @method  createClass
+     */
+    Projects = React.createClass({displayName: "Projects",
+
+        render: function () {
+            return (
+                React.createElement("ul", {className: "projects"}, 
+                    
+                        this.props.projects.map(function (project) {
+                            return React.createElement(Project, {project: project, key: project.id});
+                        })
+                    
+                )
+            );
+        }
+    });
+
+// export
+module.exports = {
+    render: function (props, el) {
+        return ReactDOM.render(React.createElement(Projects, React.__spread({},  props)), el);
     }
 };
 

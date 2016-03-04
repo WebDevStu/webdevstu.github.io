@@ -6,9 +6,9 @@ var React = require('react'),
         render: function () {
 
             var year = new Date().getFullYear();
-            
+
             return (
-                &copy; Stewart Anderson {year}
+                <span>&copy; Stewart Anderson {year}</span>
             );
         }
     });

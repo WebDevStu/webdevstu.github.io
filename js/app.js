@@ -12,6 +12,7 @@
 
     // compnents
     Navigation = require('./components/navigation.jsx'),
+        Projects = require('./components/projects.jsx'),
         Footer = require('./components/footer.jsx');
 
     // ref in global scope
@@ -21,6 +22,7 @@
     fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
 
         Navigation.render(config, $('nav'));
+        Projects.render(config, $('projects'));
         Footer.render($('footer'));
 
         // TODO: make route handler
