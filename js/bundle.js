@@ -102,12 +102,9 @@ var React = require('react'),
                     return content.id === 'projects';
                 });
 
-                console.log(introduction);
-
                 return (
                     React.createElement("div", null, 
-                        React.createElement("h2", {className: "title"}, "Projects"), ",", 
-
+                        React.createElement("h2", {className: "title"}, "Projects"), 
                         
                             introduction.content.map(function (para, index) {
                                 return React.createElement("p", {key: index}, para);
@@ -156,13 +153,15 @@ var React = require('react'),
         render: function () {
 
             return (
-                React.createElement(Introduction, {content: this.props.content}),
-                React.createElement("ul", {className: "projects"}, 
-                    
-                        this.props.projects.map(function (project) {
-                            return React.createElement(Project, {project: project, key: project.id});
-                        })
-                    
+                React.createElement("div", null, 
+                    React.createElement(Introduction, {content: this.props.content}), 
+                    React.createElement("ul", {className: "projects"}, 
+                        
+                            this.props.projects.map(function (project) {
+                                return React.createElement(Project, {project: project, key: project.id});
+                            })
+                        
+                    )
                 )
             );
         }
@@ -192,7 +191,6 @@ module.exports = function (state) {
     }, {
         path: '/(\/)?projects',
         method: function method() {
-            console.log('projects');
             Projects.render(state, body);
         }
     }],
@@ -214,7 +212,6 @@ module.exports = function (state) {
     return {
 
         start: function start() {
-
             // register listener
             window.addEventListener('popstate', _onHashChange, false);
 

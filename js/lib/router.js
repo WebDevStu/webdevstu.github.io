@@ -14,7 +14,6 @@ module.exports = function (state) {
     }, {
         path: '/(\/)?projects',
         method: function method() {
-            console.log('projects');
             Projects.render(state, body);
         }
     }],
@@ -36,7 +35,6 @@ module.exports = function (state) {
     return {
 
         start: function start() {
-
             // register listener
             window.addEventListener('popstate', _onHashChange, false);
 

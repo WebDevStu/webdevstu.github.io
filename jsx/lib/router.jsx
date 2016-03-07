@@ -12,10 +12,10 @@ module.exports = function (state) {
         }, {
             path: '/(\/)?projects',
             method: () => {
-                console.log('projects');
                 Projects.render(state, body);
             }
         }],
+
 
         _onHashChange = () => {
 
@@ -36,7 +36,6 @@ module.exports = function (state) {
     return {
 
         start: () => {
-
             // register listener
             window.addEventListener('popstate', _onHashChange, false);
 

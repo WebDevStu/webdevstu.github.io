@@ -15,12 +15,9 @@ var React = require('react'),
                     return content.id === 'projects';
                 });
 
-                console.log(introduction);
-
                 return (
                     <div>
-                        <h2 className="title">Projects</h2>,
-
+                        <h2 className="title">Projects</h2>
                         {
                             introduction.content.map(function (para, index) {
                                 return <p key={index}>{para}</p>;
@@ -69,14 +66,16 @@ var React = require('react'),
         render: function () {
 
             return (
-                <Introduction content={this.props.content} />,
-                <ul className="projects">
-                    {
-                        this.props.projects.map(function (project) {
-                            return <Project project={project} key={project.id} />;
-                        })
-                    }
-                </ul>
+                <div>
+                    <Introduction content={this.props.content} />
+                    <ul className="projects">
+                        {
+                            this.props.projects.map(function (project) {
+                                return <Project project={project} key={project.id} />;
+                            })
+                        }
+                    </ul>
+                </div>
             );
         }
     });
