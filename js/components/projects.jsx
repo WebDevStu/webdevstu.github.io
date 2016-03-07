@@ -37,9 +37,12 @@ var React = require('react'),
     Project = React.createClass({
 
         render: function () {
+
+            var project = this.props.project;
+
             return (
                 <li className="project" data-icon="&#xf02c;">
-                    <h5 className="title">{this.props.project.title}</h5>
+                    <h5 className="title">{project.title}</h5>
 
                     {
                         this.props.project.content.map(function (content, index) {
@@ -48,8 +51,8 @@ var React = require('react'),
                     }
 
                     <ul className="links">
-                        <li><a href="https://github.com/WebDevStu/{project.id}" data-icon="&#xf09b;">GitHub</a></li>
-                        <li><a href="/demo/{project.id}{project.demo}" data-icon="&#xf0c1;">Demo</a></li>
+                        <li><a href={"https://github.com/WebDevStu/" + project.id} data-icon="&#xf09b;">GitHub</a></li>
+                        <li><a href={"/demo/" + project.id + project.demo} data-icon="&#xf0c1;">Demo</a></li>
                     </ul>
                 </li>
             );

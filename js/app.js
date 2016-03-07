@@ -9,13 +9,13 @@
         React = require('react'),
         ReactDOM = require('react-dom'),
         fetch = require('./lib/xhr'),
-        Router = require('./lib/router'),
+        router = require('./lib/router'),
 
     // compnents
     Navigation = require('./components/navigation.jsx'),
         Footer = require('./components/footer.jsx');
 
-    var router = undefined;
+    var routing = undefined;
 
     // ref in global scope
     window.React = React;
@@ -28,8 +28,7 @@
         Footer.render($('footer'));
 
         // start router
-        router = Router(config);
-        router.start();
+        routing = router(config).start();
 
         // set default hash to trigger on the router
         location.hash = location.hash || '#/projects';

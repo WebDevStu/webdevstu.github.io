@@ -10,13 +10,13 @@
         React = require('react'),
         ReactDOM = require('react-dom'),
         fetch = require('./lib/xhr'),
-        Router = require('./lib/router'),
+        router = require('./lib/router'),
 
     // compnents
     Navigation = require('./components/navigation.jsx'),
         Footer = require('./components/footer.jsx');
 
-    var router = undefined;
+    var routing = undefined;
 
     // ref in global scope
     window.React = React;
@@ -29,8 +29,7 @@
         Footer.render($('footer'));
 
         // start router
-        router = Router(config);
-        router.start();
+        routing = router(config).start();
 
         // set default hash to trigger on the router
         location.hash = location.hash || '#/projects';
@@ -148,9 +147,12 @@ var React = require('react'),
     Project = React.createClass({displayName: "Project",
 
         render: function () {
+
+            var project = this.props.project;
+
             return (
                 React.createElement("li", {className: "project", "data-icon": ""}, 
-                    React.createElement("h5", {className: "title"}, this.props.project.title), 
+                    React.createElement("h5", {className: "title"}, project.title), 
 
                     
                         this.props.project.content.map(function (content, index) {
@@ -159,8 +161,8 @@ var React = require('react'),
                     
 
                     React.createElement("ul", {className: "links"}, 
-                        React.createElement("li", null, React.createElement("a", {href: "https://github.com/WebDevStu/{project.id}", "data-icon": ""}, "GitHub")), 
-                        React.createElement("li", null, React.createElement("a", {href: "/demo/{project.id}{project.demo}", "data-icon": ""}, "Demo"))
+                        React.createElement("li", null, React.createElement("a", {href: "https://github.com/WebDevStu/" + project.id, "data-icon": ""}, "GitHub")), 
+                        React.createElement("li", null, React.createElement("a", {href: "/demo/" + project.id + project.demo, "data-icon": ""}, "Demo"))
                     )
                 )
             );
