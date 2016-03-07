@@ -2,7 +2,7 @@
     {
         "id": "projects",
         "icon": "\uf02c",
-        "href": "/",
+        "href": "/#/projects",
         "nav": "Projects",
         "title": "Projects",
         "content": [
@@ -12,7 +12,7 @@
     {
         "id": "aboutme",
         "icon": "\ue601",
-        "href": "/about-me",
+        "href": "/#/about-me",
         "nav": "About",
         "title": "Who are you?",
         "content": [

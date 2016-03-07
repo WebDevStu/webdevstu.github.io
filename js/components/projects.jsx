@@ -2,6 +2,7 @@
 var React = require('react'),
     ReactDOM = require('react-dom'),
 
+    
     /**
      * project iterator
      *
@@ -37,7 +38,23 @@ var React = require('react'),
     Projects = React.createClass({
 
         render: function () {
+
+            var introduction = this.props.content.find(function (content) {
+                return content.id === 'projects';
+            });
+
+            console.log(introduction, 'foo foo');
+
             return (
+                <h2 className="title">Projects</h2>,
+                <div>
+                    {
+                        introduction.content.map(function (para, index) {
+                            return <p key={index}>{para}</p>;
+                        })
+                    }
+                </div>,
+
                 <ul className="projects">
                     {
                         this.props.projects.map(function (project) {

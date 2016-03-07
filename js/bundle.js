@@ -10,11 +10,13 @@
         React = require('react'),
         ReactDOM = require('react-dom'),
         fetch = require('./lib/xhr'),
+        Router = require('./lib/router'),
 
     // compnents
     Navigation = require('./components/navigation.jsx'),
-        Projects = require('./components/projects.jsx'),
         Footer = require('./components/footer.jsx');
+
+    var router = undefined;
 
     // ref in global scope
     window.React = React;
@@ -22,15 +24,20 @@
     // fetch all dependencies
     fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
 
+        // append layout components
         Navigation.render(config, $('nav'));
-        Projects.render(config, $('projects'));
         Footer.render($('footer'));
 
-        // TODO: make route handler
+        // start router
+        router = Router(config);
+        router.start();
+
+        // set default hash to trigger on the router
+        location.hash = location.hash || '#/projects';
     });
 })();
 
-},{"./components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./components/projects.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/projects.jsx","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx":[function(require,module,exports){
+},{"./components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./lib/router":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react'),
     ReactDOM = require('react-dom'),
@@ -82,6 +89,7 @@ module.exports = {
 var React = require('react'),
     ReactDOM = require('react-dom'),
 
+    
     /**
      * project iterator
      *
@@ -117,7 +125,23 @@ var React = require('react'),
     Projects = React.createClass({displayName: "Projects",
 
         render: function () {
+
+            var introduction = this.props.content.find(function (content) {
+                return content.id === 'projects';
+            });
+
+            console.log(introduction, 'foo foo');
+
             return (
+                React.createElement("h2", {className: "title"}, "Projects"),
+                React.createElement("div", null, 
+                    
+                        introduction.content.map(function (para, index) {
+                            return React.createElement("p", {key: index}, para);
+                        })
+                    
+                ),
+
                 React.createElement("ul", {className: "projects"}, 
                     
                         this.props.projects.map(function (project) {
@@ -136,7 +160,55 @@ module.exports = {
     }
 };
 
-},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js":[function(require,module,exports){
+},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js":[function(require,module,exports){
+'use strict';
+
+var body = document.getElementById('body'),
+    Projects = require('../components/projects.jsx');
+
+module.exports = function (state) {
+
+    // privates
+    var _routes = [{
+        path: '/(\/)?about\-me',
+        method: function method() {
+            console.log('about me');
+        }
+    }, {
+        path: '/(\/)?projects',
+        method: function method() {
+            console.log('projects');
+            Projects.render(state, body);
+        }
+    }],
+        _onHashChange = function _onHashChange() {
+
+        var hash = location.hash;
+
+        _routes.forEach(function (route) {
+
+            var regExp = new RegExp(route.path);
+
+            if (regExp.exec(hash)) {
+                route.method();
+            }
+        });
+    };
+
+    // public methods
+    return {
+
+        start: function start() {
+
+            // register listener
+            window.addEventListener('popstate', _onHashChange, false);
+
+            _onHashChange();
+        }
+    };
+};
+
+},{"../components/projects.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/projects.jsx"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js":[function(require,module,exports){
 'use strict';
 
 /**
