@@ -37,7 +37,31 @@
     });
 })();
 
-},{"./components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./lib/router":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx":[function(require,module,exports){
+},{"./components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./lib/router":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/about.jsx":[function(require,module,exports){
+/** @jsx React.DOM */
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+
+
+    AboutMe = React.createClass({displayName: "AboutMe",
+
+        render: function () {
+
+            return (
+                React.createElement("div", null, 
+                    "About me yo"
+                )
+            );
+        }
+    });
+
+module.exports = {
+    render: function (props, el) {
+        return ReactDOM.render(React.createElement(AboutMe, null), el);
+    }
+};
+
+},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 var React = require('react'),
     ReactDOM = require('react-dom'),
@@ -177,8 +201,9 @@ module.exports = {
 },{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js":[function(require,module,exports){
 'use strict';
 
-var body = document.getElementById('body'),
-    Projects = require('../components/projects.jsx');
+var body = document.getElementById('mainBody'),
+    Projects = require('../components/projects.jsx'),
+    AboutMe = require('../components/about.jsx');
 
 module.exports = function (state) {
 
@@ -186,7 +211,7 @@ module.exports = function (state) {
     var _routes = [{
         path: '/(\/)?about\-me',
         method: function method() {
-            console.log('about me');
+            AboutMe.render(state, body);
         }
     }, {
         path: '/(\/)?projects',
@@ -220,7 +245,7 @@ module.exports = function (state) {
     };
 };
 
-},{"../components/projects.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/projects.jsx"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js":[function(require,module,exports){
+},{"../components/about.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/about.jsx","../components/projects.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/projects.jsx"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js":[function(require,module,exports){
 'use strict';
 
 /**

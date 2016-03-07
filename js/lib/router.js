@@ -1,7 +1,8 @@
 'use strict';
 
-var body = document.getElementById('body'),
-    Projects = require('../components/projects.jsx');
+var body = document.getElementById('mainBody'),
+    Projects = require('../components/projects.jsx'),
+    AboutMe = require('../components/about.jsx');
 
 module.exports = function (state) {
 
@@ -9,7 +10,7 @@ module.exports = function (state) {
     var _routes = [{
         path: '/(\/)?about\-me',
         method: function method() {
-            console.log('about me');
+            AboutMe.render(state, body);
         }
     }, {
         path: '/(\/)?projects',

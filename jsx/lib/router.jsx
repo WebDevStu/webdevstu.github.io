@@ -1,5 +1,6 @@
-const body = document.getElementById('body'),
-    Projects = require('../components/projects.jsx');
+const body      = document.getElementById('mainBody'),
+    Projects    = require('../components/projects.jsx'),
+    AboutMe     = require('../components/about.jsx');
 
 module.exports = function (state) {
 
@@ -7,7 +8,7 @@ module.exports = function (state) {
     const _routes = [{
             path: '/(\/)?about\-me',
             method: () => {
-                console.log('about me');
+                AboutMe.render(state, body);
             }
         }, {
             path: '/(\/)?projects',
