@@ -89,11 +89,40 @@ module.exports = {
 var React = require('react'),
     ReactDOM = require('react-dom'),
 
-    
+    /**
+     * introduction to the projects
+     *
+     * @method  Introduction
+     */
+    Introduction = React.createClass({displayName: "Introduction",
+
+            render: function () {
+
+                var introduction = this.props.content.find(function (content) {
+                    return content.id === 'projects';
+                });
+
+                console.log(introduction);
+
+                return (
+                    React.createElement("div", null, 
+                        React.createElement("h2", {className: "title"}, "Projects"), ",", 
+
+                        
+                            introduction.content.map(function (para, index) {
+                                return React.createElement("p", {key: index}, para);
+                            })
+                        
+                    )
+                );
+            }
+    }),
+
+
     /**
      * project iterator
      *
-     * @method  createClass
+     * @method  Project
      */
     Project = React.createClass({displayName: "Project",
 
@@ -120,28 +149,14 @@ var React = require('react'),
     /**
      * main project wrapper
      *
-     * @method  createClass
+     * @method  Projects
      */
     Projects = React.createClass({displayName: "Projects",
 
         render: function () {
 
-            var introduction = this.props.content.find(function (content) {
-                return content.id === 'projects';
-            });
-
-            console.log(introduction, 'foo foo');
-
             return (
-                React.createElement("h2", {className: "title"}, "Projects"),
-                React.createElement("div", null, 
-                    
-                        introduction.content.map(function (para, index) {
-                            return React.createElement("p", {key: index}, para);
-                        })
-                    
-                ),
-
+                React.createElement(Introduction, {content: this.props.content}),
                 React.createElement("ul", {className: "projects"}, 
                     
                         this.props.projects.map(function (project) {

@@ -2,11 +2,40 @@
 var React = require('react'),
     ReactDOM = require('react-dom'),
 
-    
+    /**
+     * introduction to the projects
+     *
+     * @method  Introduction
+     */
+    Introduction = React.createClass({
+
+            render: function () {
+
+                var introduction = this.props.content.find(function (content) {
+                    return content.id === 'projects';
+                });
+
+                console.log(introduction);
+
+                return (
+                    <div>
+                        <h2 className="title">Projects</h2>,
+
+                        {
+                            introduction.content.map(function (para, index) {
+                                return <p key={index}>{para}</p>;
+                            })
+                        }
+                    </div>
+                );
+            }
+    }),
+
+
     /**
      * project iterator
      *
-     * @method  createClass
+     * @method  Project
      */
     Project = React.createClass({
 
@@ -33,28 +62,14 @@ var React = require('react'),
     /**
      * main project wrapper
      *
-     * @method  createClass
+     * @method  Projects
      */
     Projects = React.createClass({
 
         render: function () {
 
-            var introduction = this.props.content.find(function (content) {
-                return content.id === 'projects';
-            });
-
-            console.log(introduction, 'foo foo');
-
             return (
-                <h2 className="title">Projects</h2>,
-                <div>
-                    {
-                        introduction.content.map(function (para, index) {
-                            return <p key={index}>{para}</p>;
-                        })
-                    }
-                </div>,
-
+                <Introduction content={this.props.content} />,
                 <ul className="projects">
                     {
                         this.props.projects.map(function (project) {
