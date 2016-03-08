@@ -50,7 +50,6 @@ module.exports = function (state) {
 
     // public methods
     return {
-
         start: function start() {
             // register listener
             window.addEventListener('popstate', _onHashChange, false);

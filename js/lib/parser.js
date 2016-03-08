@@ -13,6 +13,7 @@ var parser = function parser() {
          * @param   {String} content [the string to parse]
          * @returns {String}         [mutated string with html tags within]
          */
+
         parse: function parse(content) {
 
             var regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),

@@ -7,7 +7,7 @@ module.exports = function (state) {
     // privates
     const _routes = [{
             path: '/(\/)?about\-me',
-            method: () => {
+            method () {
 
                 AboutMe.render(state, body);
 
@@ -15,7 +15,7 @@ module.exports = function (state) {
             }
         }, {
             path: '/(\/)?projects',
-            method: () => {
+            method () {
 
                 Projects.render(state, body);
 
@@ -52,7 +52,7 @@ module.exports = function (state) {
     // public methods
     return {
 
-        start: () => {
+        start () {
             // register listener
             window.addEventListener('popstate', _onHashChange, false);
 

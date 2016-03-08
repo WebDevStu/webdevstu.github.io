@@ -49,8 +49,6 @@ var React       = require('react'),
                 return content.id === 'aboutme';
             });
 
-            console.log(this.props);
-
             return (
                 React.createElement("div", null, 
                     React.createElement("h2", {className: "title"}, about.title), 
@@ -235,6 +233,7 @@ var parser = function parser() {
          * @param   {String} content [the string to parse]
          * @returns {String}         [mutated string with html tags within]
          */
+
         parse: function parse(content) {
 
             var regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
@@ -314,7 +313,6 @@ module.exports = function (state) {
 
     // public methods
     return {
-
         start: function start() {
             // register listener
             window.addEventListener('popstate', _onHashChange, false);

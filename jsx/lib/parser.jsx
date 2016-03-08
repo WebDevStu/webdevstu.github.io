@@ -13,7 +13,7 @@ const parser = function () {
          * @param   {String} content [the string to parse]
          * @returns {String}         [mutated string with html tags within]
          */
-        parse: (content) => {
+        parse (content) {
 
             let regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
                 match,

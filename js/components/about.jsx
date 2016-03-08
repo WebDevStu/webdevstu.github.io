@@ -10,8 +10,6 @@ var React       = require('react'),
                 return content.id === 'aboutme';
             });
 
-            console.log(this.props);
-
             return (
                 <div>
                     <h2 className="title">{about.title}</h2>
