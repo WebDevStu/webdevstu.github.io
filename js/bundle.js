@@ -4,39 +4,21 @@
 ;(function () {
 
     // constants
-    var $ = function $(id) {
-        return document.getElementById(id);
-    },
-        React = require('react'),
-        ReactDOM = require('react-dom'),
-        fetch = require('./lib/xhr'),
-        router = require('./lib/router'),
-
-    // compnents
-    Navigation = require('./components/navigation.jsx'),
-        Footer = require('./components/footer.jsx');
-
-    var routing = undefined;
-
-    // ref in global scope
-    window.React = React;
+    var fetch = require('./lib/xhr'),
+        router = require('./lib/router');
 
     // fetch all dependencies
     fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
 
-        // append layout components
-        Navigation.render(config, $('nav'));
-        Footer.render($('footer'));
-
         // start router
-        routing = router(config).start();
+        router(config).start();
 
         // set default hash to trigger on the router
         location.hash = location.hash || '#/projects';
     });
 })();
 
-},{"./components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./lib/router":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/about.jsx":[function(require,module,exports){
+},{"./lib/router":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/about.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
 var React       = require('react'),
     ReactDOM    = require('react-dom'),
@@ -94,15 +76,6 @@ module.exports = {
 var React       = require('react'),
     ReactDOM    = require('react-dom'),
     Navigation  = React.createClass({displayName: "Navigation",
-
-        getInitialState: function () {
-
-            this.props.content.map(function (item) {
-                item.selected = item.selected || false;
-            });
-
-            return null;
-        },
 
         render: function () {
             return (
@@ -263,7 +236,13 @@ module.exports = parser();
 },{}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js":[function(require,module,exports){
 'use strict';
 
-var body = document.getElementById('mainBody'),
+var $ = function $(id) {
+    return document.getElementById(id);
+},
+
+// compnents
+Navigation = require('../components/navigation.jsx'),
+    Footer = require('../components/footer.jsx'),
     Projects = require('../components/projects.jsx'),
     AboutMe = require('../components/about.jsx');
 
@@ -274,7 +253,7 @@ module.exports = function (state) {
         path: '/(\/)?about\-me',
         method: function method() {
 
-            AboutMe.render(state, body);
+            AboutMe.render(state, $('mainBody'));
 
             return 'aboutme';
         }
@@ -282,12 +261,19 @@ module.exports = function (state) {
         path: '/(\/)?projects',
         method: function method() {
 
-            Projects.render(state, body);
+            Projects.render(state, $('mainBody'));
 
             return 'projects';
         }
     }],
-        _onHashChange = function _onHashChange() {
+
+
+    /**
+     * event callback for when popstate event if fired
+     *
+     * @method _onHashChange
+     */
+    _onHashChange = function _onHashChange() {
 
         var hash = location.hash;
 
@@ -300,29 +286,59 @@ module.exports = function (state) {
             }
         });
     },
-        _updateSelected = function _updateSelected(id) {
 
-        var item = state.content.find(function (item) {
+
+    /**
+     * updates the selected navigation item
+     *
+     * @method _updateSelected
+     * @param  {String} id [string id of the content item]
+     */
+    _updateSelected = function _updateSelected(id) {
+
+        var last = state.content.find(function (item) {
+            return item.selected;
+        }),
+            item = state.content.find(function (item) {
             return item.id === id;
         });
+
+        if (last) {
+            last.selected = false;
+        }
 
         if (item) {
             item.selected = true;
         }
+
+        Navigation.render(state, $('nav'));
     };
 
     // public methods
     return {
+
+        /**
+         * starts the router - applies the layout files
+         *
+         * @method  start
+         */
+
         start: function start() {
+
+            // layouts deps
+            Navigation.render(state, $('nav'));
+            Footer.render($('footer'));
+
             // register listener
             window.addEventListener('popstate', _onHashChange, false);
 
+            // call first route
             _onHashChange();
         }
     };
 };
 
-},{"../components/about.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/about.jsx","../components/projects.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/projects.jsx"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js":[function(require,module,exports){
+},{"../components/about.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/about.jsx","../components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","../components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","../components/projects.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/projects.jsx"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js":[function(require,module,exports){
 'use strict';
 
 /**

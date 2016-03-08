@@ -3,15 +3,6 @@ var React       = require('react'),
     ReactDOM    = require('react-dom'),
     Navigation  = React.createClass({
 
-        getInitialState: function () {
-
-            this.props.content.map(function (item) {
-                item.selected = item.selected || false;
-            });
-
-            return null;
-        },
-
         render: function () {
             return (
                 <nav>
