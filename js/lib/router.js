@@ -10,12 +10,18 @@ module.exports = function (state) {
     var _routes = [{
         path: '/(\/)?about\-me',
         method: function method() {
+
             AboutMe.render(state, body);
+
+            return 'aboutme';
         }
     }, {
         path: '/(\/)?projects',
         method: function method() {
+
             Projects.render(state, body);
+
+            return 'projects';
         }
     }],
         _onHashChange = function _onHashChange() {
@@ -27,9 +33,19 @@ module.exports = function (state) {
             var regExp = new RegExp(route.path);
 
             if (regExp.exec(hash)) {
-                route.method();
+                _updateSelected(route.method());
             }
         });
+    },
+        _updateSelected = function _updateSelected(id) {
+
+        var item = state.content.find(function (item) {
+            return item.id === id;
+        });
+
+        if (item) {
+            item.selected = true;
+        }
     };
 
     // public methods

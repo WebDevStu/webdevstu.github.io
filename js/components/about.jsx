@@ -10,7 +10,7 @@ var React       = require('react'),
                 return content.id === 'aboutme';
             });
 
-            console.log(about);
+            console.log(this.props);
 
             return (
                 <div>

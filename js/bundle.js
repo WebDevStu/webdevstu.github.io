@@ -49,7 +49,7 @@ var React       = require('react'),
                 return content.id === 'aboutme';
             });
 
-            console.log(about);
+            console.log(this.props);
 
             return (
                 React.createElement("div", null, 
@@ -96,12 +96,22 @@ module.exports = {
 var React       = require('react'),
     ReactDOM    = require('react-dom'),
     Navigation  = React.createClass({displayName: "Navigation",
+
+        getInitialState: function () {
+
+            this.props.content.map(function (item) {
+                item.selected = item.selected || false;
+            });
+
+            return null;
+        },
+
         render: function () {
             return (
                 React.createElement("nav", null, 
                     
                         this.props.content.map(function (item) {
-                            return React.createElement("a", {href: item.href, "data-icon": item.icon, key: item.id}, item.nav);
+                            return React.createElement("a", {className: (item.selected) ? 'selected' : '', href: item.href, "data-icon": item.icon, key: item.id}, item.nav);
                         })
                     
                 )
@@ -214,10 +224,17 @@ module.exports = {
 
 var parser = function parser() {
 
-    var _allowedTags = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul', 'br', 'hr'];
+    var _whitelist = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul', 'br', 'hr'];
 
     return {
 
+        /**
+         * parses supplied text only allowing a whitelist of html tags through
+         *
+         * @method parse
+         * @param   {String} content [the string to parse]
+         * @returns {String}         [mutated string with html tags within]
+         */
         parse: function parse(content) {
 
             var regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
@@ -227,9 +244,8 @@ var parser = function parser() {
             while ((match = regExp.exec(content)) !== null) {
 
                 parsed = match[0];
-                // match[0] string to replace
 
-                if (_allowedTags.indexOf(match[3]) >= 0) {
+                if (_whitelist.indexOf(match[3]) >= 0) {
 
                     parsed = parsed.replace(/\[/g, '<');
                     parsed = parsed.replace(/\]/g, '>');
@@ -258,12 +274,18 @@ module.exports = function (state) {
     var _routes = [{
         path: '/(\/)?about\-me',
         method: function method() {
+
             AboutMe.render(state, body);
+
+            return 'aboutme';
         }
     }, {
         path: '/(\/)?projects',
         method: function method() {
+
             Projects.render(state, body);
+
+            return 'projects';
         }
     }],
         _onHashChange = function _onHashChange() {
@@ -275,9 +297,19 @@ module.exports = function (state) {
             var regExp = new RegExp(route.path);
 
             if (regExp.exec(hash)) {
-                route.method();
+                _updateSelected(route.method());
             }
         });
+    },
+        _updateSelected = function _updateSelected(id) {
+
+        var item = state.content.find(function (item) {
+            return item.id === id;
+        });
+
+        if (item) {
+            item.selected = true;
+        }
     };
 
     // public methods

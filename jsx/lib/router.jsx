@@ -8,12 +8,18 @@ module.exports = function (state) {
     const _routes = [{
             path: '/(\/)?about\-me',
             method: () => {
+
                 AboutMe.render(state, body);
+
+                return 'aboutme';
             }
         }, {
             path: '/(\/)?projects',
             method: () => {
+
                 Projects.render(state, body);
+
+                return 'projects';
             }
         }],
 
@@ -27,11 +33,21 @@ module.exports = function (state) {
                 let regExp = new RegExp(route.path);
 
                 if (regExp.exec(hash)) {
-                    route.method();
+                    _updateSelected(route.method());
                 }
             });
+        },
 
+        _updateSelected = (id) => {
+
+            var item = state.content.find((item) => item.id === id);
+
+            if (item) {
+                item.selected = true;
+            }
         };
+
+
 
     // public methods
     return {
