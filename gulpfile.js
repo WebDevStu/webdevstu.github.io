@@ -1,8 +1,10 @@
-var gulp = require('gulp'),
-    source = require('vinyl-source-stream'),
-    browserify = require('browserify'),
-    watchify = require('watchify'),
-    reactify = require('reactify');
+var gulp        = require('gulp'),
+    debug       = require('gulp-debug'),
+    source      = require('vinyl-source-stream'),
+    browserify  = require('browserify'),
+    watchify    = require('watchify'),
+    reactify    = require('reactify'),
+    uglify      = require('gulp-uglify');
 
 gulp.task('browserify', function () {
 
@@ -11,7 +13,7 @@ gulp.task('browserify', function () {
             transform: [reactify],
             cache: {},
             packageCache: {},
-            fullPaths: true
+            fullPaths: false
         }),
         watcher = watchify(bundler);
 
@@ -21,7 +23,9 @@ gulp.task('browserify', function () {
 
         watcher.bundle()
                 .pipe(source('bundle.js'))
-                .pipe(gulp.dest('./js/'));
+                .pipe(debug({title: 'bundle:'}))
+                .pipe(gulp.dest('./js/'))
+                .pipe(debug({title: 'dest:'}));
 
         console.log('Updated!', (Date.now() - start) + 'ms');
     })
@@ -30,5 +34,12 @@ gulp.task('browserify', function () {
     .pipe(gulp.dest('./js/'));
 });
 
+gulp.task('ugly', function() {
+    return gulp.src('./js/bundle.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('./dist'));
+});
+
 
 gulp.task('default', ['browserify']);
+gulp.task('production', ['ugly']);
