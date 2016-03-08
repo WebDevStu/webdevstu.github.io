@@ -4,9 +4,13 @@ var gulp        = require('gulp'),
     browserify  = require('browserify'),
     watchify    = require('watchify'),
     reactify    = require('reactify'),
-    uglify      = require('gulp-uglify');
+    uglify      = require('gulp-uglify'),
+    replace     = require('gulp-replace-task');
 
-gulp.task('browserify', function () {
+/**
+ * watches fiels for change
+ */
+gulp.task('watch', function () {
 
     var bundler = browserify({
             entries: ['./js/app.js'],
@@ -34,12 +38,16 @@ gulp.task('browserify', function () {
     .pipe(gulp.dest('./js/'));
 });
 
-gulp.task('ugly', function() {
+
+/**
+ * uglify the js
+ */
+gulp.task('ugly', function () {
+
     return gulp.src('./js/bundle.js')
         .pipe(uglify())
         .pipe(gulp.dest('./dist'));
 });
 
-
-gulp.task('default', ['browserify']);
-gulp.task('production', ['ugly']);
+gulp.task('default',     ['watch']);
+gulp.task('production',  ['ugly']);
