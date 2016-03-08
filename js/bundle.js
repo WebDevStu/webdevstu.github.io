@@ -151,7 +151,9 @@ var React       = require('react'),
 
                     React.createElement("ul", {className: "links"}, 
                         React.createElement("li", null, React.createElement("a", {href: "https://github.com/WebDevStu/" + project.id, "data-icon": ""}, "GitHub")), 
-                        React.createElement("li", null, React.createElement("a", {href: "/demo/" + project.id + project.demo, "data-icon": ""}, "Demo"))
+                        
+                            (project.demo) ? React.createElement("li", null, React.createElement("a", {href: "/demo/" + project.id + project.demo, "data-icon": ""}, "Demo")) : ''
+                        
                     )
                 )
             );

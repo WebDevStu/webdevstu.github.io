@@ -53,7 +53,9 @@ var React       = require('react'),
 
                     <ul className="links">
                         <li><a href={"https://github.com/WebDevStu/" + project.id} data-icon="&#xf09b;">GitHub</a></li>
-                        <li><a href={"/demo/" + project.id + project.demo} data-icon="&#xf0c1;">Demo</a></li>
+                        {
+                            (project.demo) ? <li><a href={"/demo/" + project.id + project.demo} data-icon="&#xf0c1;">Demo</a></li> : ''
+                        }
                     </ul>
                 </li>
             );
