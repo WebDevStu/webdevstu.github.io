@@ -1,6 +1,5 @@
 
 ;(() => {
-
     // constants
     const
         fetch   = require('./lib/xhr'),

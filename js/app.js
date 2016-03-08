@@ -1,7 +1,6 @@
 'use strict';
 
 ;(function () {
-
     // constants
     var fetch = require('./lib/xhr'),
         router = require('./lib/router');
