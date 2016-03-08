@@ -38,17 +38,27 @@
 
 },{"./components/footer.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx","./components/navigation.jsx":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx","./lib/router":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js","./lib/xhr":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/xhr.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/about.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-
-
-    AboutMe = React.createClass({displayName: "AboutMe",
+var React       = require('react'),
+    ReactDOM    = require('react-dom'),
+    parser      = require('../lib/parser'),
+    AboutMe     = React.createClass({displayName: "AboutMe",
 
         render: function () {
 
+            var about = this.props.content.find(function (content) {
+                return content.id === 'aboutme';
+            });
+
+            console.log(about);
+
             return (
                 React.createElement("div", null, 
-                    "About me yo"
+                    React.createElement("h2", {className: "title"}, about.title), 
+                    
+                        about.content.map(function (para, index) {
+                            return React.createElement("p", {key: index}, parser.parse(para));
+                        })
+                    
                 )
             );
         }
@@ -56,16 +66,15 @@ var React = require('react'),
 
 module.exports = {
     render: function (props, el) {
-        return ReactDOM.render(React.createElement(AboutMe, null), el);
+        return ReactDOM.render(React.createElement(AboutMe, React.__spread({},  props)), el);
     }
 };
 
-},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx":[function(require,module,exports){
+},{"../lib/parser":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/parser.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/footer.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    Footer = React.createClass({displayName: "Footer",
-
+var React       = require('react'),
+    ReactDOM    = require('react-dom'),
+    Footer      = React.createClass({displayName: "Footer",
         render: function () {
 
             var year = new Date().getFullYear();
@@ -84,10 +93,9 @@ module.exports = {
 
 },{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/navigation.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    Navigation = React.createClass({displayName: "Navigation",
-
+var React       = require('react'),
+    ReactDOM    = require('react-dom'),
+    Navigation  = React.createClass({displayName: "Navigation",
         render: function () {
             return (
                 React.createElement("nav", null, 
@@ -200,7 +208,31 @@ module.exports = {
     }
 };
 
-},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js":[function(require,module,exports){
+},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/parser.js":[function(require,module,exports){
+'use strict';
+
+var parser = function parser() {
+
+    return {
+
+        parse: function parse(content) {
+
+            var regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
+                match = undefined;
+
+            console.log(regExp.exec(content));
+
+            content = content.replace(/\[/g, '<');
+            content = content.replace(/\]/g, '>');
+
+            return content;
+        }
+    };
+};
+
+module.exports = parser();
+
+},{}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/router.js":[function(require,module,exports){
 'use strict';
 
 var body = document.getElementById('mainBody'),

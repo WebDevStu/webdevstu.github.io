@@ -1,8 +1,7 @@
 /** @jsx React.DOM */
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    Navigation = React.createClass({
-
+var React       = require('react'),
+    ReactDOM    = require('react-dom'),
+    Navigation  = React.createClass({
         render: function () {
             return (
                 <nav>
