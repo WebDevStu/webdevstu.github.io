@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
-var React = require('react'),
-    ReactDOM = require('react-dom'),
+var React       = require('react'),
+    ReactDOM    = require('react-dom'),
+    parser      = require('../lib/parser'),
 
     /**
      * introduction to the projects
@@ -20,7 +21,7 @@ var React = require('react'),
                         <h2 className="title">Projects</h2>
                         {
                             introduction.content.map(function (para, index) {
-                                return <p key={index}>{para}</p>;
+                                return <p key={index} dangerouslySetInnerHTML={{__html: parser.parse(para)}}></p>;
                             })
                         }
                     </div>

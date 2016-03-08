@@ -117,8 +117,9 @@ module.exports = {
 
 },{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/components/projects.jsx":[function(require,module,exports){
 /** @jsx React.DOM */
-var React = require('react'),
-    ReactDOM = require('react-dom'),
+var React       = require('react'),
+    ReactDOM    = require('react-dom'),
+    parser      = require('../lib/parser'),
 
     /**
      * introduction to the projects
@@ -138,7 +139,7 @@ var React = require('react'),
                         React.createElement("h2", {className: "title"}, "Projects"), 
                         
                             introduction.content.map(function (para, index) {
-                                return React.createElement("p", {key: index}, para);
+                                return React.createElement("p", {key: index, dangerouslySetInnerHTML: {__html: parser.parse(para)}});
                             })
                         
                     )
@@ -208,7 +209,7 @@ module.exports = {
     }
 };
 
-},{"react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/parser.js":[function(require,module,exports){
+},{"../lib/parser":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/parser.js","react":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react/react.js","react-dom":"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/node_modules/react-dom/index.js"}],"/Users/stewartanderson/Sites/Other/stewart-anderson.co.uk/js/lib/parser.js":[function(require,module,exports){
 'use strict';
 
 var parser = function parser() {
