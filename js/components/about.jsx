@@ -17,7 +17,7 @@ var React       = require('react'),
                     <h2 className="title">{about.title}</h2>
                     {
                         about.content.map(function (para, index) {
-                            return <p key={index}>{parser.parse(para)}</p>;
+                            return <p key={index} dangerouslySetInnerHTML={{__html: parser.parse(para)}}></p>;
                         })
                     }
                 </div>
