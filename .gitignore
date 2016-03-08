@@ -1,6 +1,4 @@
 .DS_Store
 .sass-cache/
-js/bower/
 node_modules
 tags
-index-old.html
