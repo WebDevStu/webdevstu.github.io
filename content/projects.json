@@ -1,5 +1,14 @@
 [
     {
+        "id": "peg-solitaire",
+        "title": "Peg Solitaire",
+        "content": [
+            "Famous game re-created in JavaScript, with an added tricky mode to test you."
+        ],
+        "demo": "-master"
+    },
+
+    {
         "id": "countdown",
         "title": "Countdown",
         "content": [
@@ -20,7 +29,9 @@
         "id": "projecteuler",
         "title": "Project Euler",
         "content": [
-            "A fall back project, to coin the description from project Eulers website"
+            "A fall back project, to coin the description from project Eulers website",
+            "[blockquote]Project Euler is a series of challenging mathematical/computer programming problems that will require more than just mathematical insights to solve. Although mathematics will help you arrive at elegant and efficient methods, the use of a computer and programming skills will be required to solve most problems.[/blockquote]"
+
         ],
         "quote": "Project Euler is a series of challenging mathematical/computer programming problems that will require more than just mathematical insights to solve. Although mathematics will help you arrive at elegant and efficient methods, the use of a computer and programming skills will be required to solve most problems.",
         "link": "https://projecteuler.net/"

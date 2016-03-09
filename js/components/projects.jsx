@@ -47,7 +47,7 @@ var React       = require('react'),
 
                     {
                         this.props.project.content.map(function (content, index) {
-                            return <p key={index}>{content}</p>;
+                            return <p key={index} dangerouslySetInnerHTML={{__html: parser.parse(content)}}></p>;
                         })
                     }
 

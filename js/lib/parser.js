@@ -20,6 +20,9 @@ var parser = function parser() {
                 match = undefined,
                 parsed = undefined;
 
+            // @TODO: temp fix, need to strip tags completely
+            content = content.replace(/<|>/g, '');
+
             while ((match = regExp.exec(content)) !== null) {
 
                 parsed = match[0];

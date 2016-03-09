@@ -145,7 +145,7 @@ var React       = require('react'),
 
                     
                         this.props.project.content.map(function (content, index) {
-                            return React.createElement("p", {key: index}, content);
+                            return React.createElement("p", {key: index, dangerouslySetInnerHTML: {__html: parser.parse(content)}});
                         }), 
                     
 
@@ -213,6 +213,9 @@ var parser = function parser() {
             var regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
                 match = undefined,
                 parsed = undefined;
+
+            // @TODO: temp fix, need to strip tags completely
+            content = content.replace(/<|>/g, '');
 
             while ((match = regExp.exec(content)) !== null) {
 

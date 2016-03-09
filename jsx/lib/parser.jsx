@@ -19,6 +19,9 @@ const parser = function () {
                 match,
                 parsed;
 
+            // @TODO: temp fix, need to strip tags completely
+            content = content.replace(/<|>/g, '');
+
             while ((match = regExp.exec(content)) !== null) {
 
                 parsed = match[0];
