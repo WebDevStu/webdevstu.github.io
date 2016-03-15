@@ -1,4 +1,5 @@
 var gulp        = require('gulp'),
+    path        = require('path'),
     debug       = require('gulp-debug'),
     source      = require('vinyl-source-stream'),
     browserify  = require('browserify'),
@@ -32,6 +33,18 @@ gulp.task('watch', function () {
                 .pipe(debug({title: 'dest:'}));
 
         console.log('Updated!', (Date.now() - start) + 'ms');
+
+        // check for development src
+        gulp.src('index.html', {
+                base: './'
+            })
+            .pipe(replace({
+                patterns: [{
+                    match: /src="dist\/bundle\.js"/g,
+                    replacement: 'src="js/bundle.js"'
+                }]
+            }))
+            .pipe(gulp.dest('./'));
     })
     .bundle()
     .pipe(source('bundle.js'))
@@ -49,5 +62,19 @@ gulp.task('ugly', function () {
         .pipe(gulp.dest('./dist'));
 });
 
+gulp.task('replace', function () {
+
+    return gulp.src('index.html', {
+            base: './'
+        })
+        .pipe(replace({
+            patterns: [{
+                match: /src="js\/bundle\.js"/g,
+                replacement: 'src="dist/bundle.js"'
+            }]
+        }))
+        .pipe(gulp.dest('./'));
+});
+
 gulp.task('default',     ['watch']);
-gulp.task('production',  ['ugly']);
+gulp.task('production',  ['ugly', 'replace']);
