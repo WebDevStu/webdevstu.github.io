@@ -62,11 +62,11 @@ module.exports = function (state) {
                 item = state.content.find((item) => item.id === id);
 
             if (last) {
-                last.selected = false;
+                last.selected = !last;
             }
 
             if (item) {
-                item.selected = true;
+                item.selected = !!item;
             }
 
             Navigation.render(state, $('nav'));

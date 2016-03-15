@@ -68,11 +68,11 @@ module.exports = function (state) {
         });
 
         if (last) {
-            last.selected = false;
+            last.selected = !last;
         }
 
         if (item) {
-            item.selected = true;
+            item.selected = !!item;
         }
 
         Navigation.render(state, $('nav'));
