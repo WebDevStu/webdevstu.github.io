@@ -1,0 +1,12 @@
+[
+    {
+        "id": "blog-article-slug",
+        "title": "Blog article title",
+        "description": "a small intro/description of the article",
+        "content": [
+            "paragraph 1",
+            "paragraph 2",
+            "paragraph 3"
+        ]
+    }
+]

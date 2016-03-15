@@ -7,8 +7,9 @@
         router = require('./lib/router');
 
     // fetch all dependencies
-    fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
+    fetch.get(['/content/projects.json', '/content/content.json', 'content/blog.json']).then(function (config) {
 
+        console.log(config);
         // start router
         router(config).start();
 
@@ -264,20 +265,31 @@ module.exports = function (state) {
 
     // privates
     var _routes = [{
-        path: '/(\/)?about\-me',
-        method: function method() {
+        // about me
+        path: '/(\/)?about\-me(/)?',
+        handler: function handler() {
 
             AboutMe.render(state, $('mainBody'));
 
             return 'aboutme';
         }
     }, {
-        path: '/(\/)?projects',
-        method: function method() {
+        // all projects listed
+        path: '/(\/)?projects(/)?',
+        handler: function handler() {
 
             Projects.render(state, $('mainBody'));
 
             return 'projects';
+        }
+    }, {
+        // blog
+        path: '/(\/)?blog(/)?',
+        handler: function handler(match) {
+
+            console.log(match);
+
+            return 'blog';
         }
     }],
 
@@ -296,7 +308,9 @@ module.exports = function (state) {
             var regExp = new RegExp(route.path);
 
             if (regExp.exec(hash)) {
-                _updateSelected(route.method());
+                // TODO: passing the hash? code smell, extract the params
+                // and pass to method
+                _updateSelected(route.handler(hash));
             }
         });
     },

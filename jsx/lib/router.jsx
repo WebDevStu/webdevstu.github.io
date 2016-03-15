@@ -12,20 +12,31 @@ module.exports = function (state) {
 
     // privates
     const _routes = [{
-            path: '/(\/)?about\-me',
-            method () {
+            // about me
+            path: '/(\/)?about\-me(/)?',
+            handler () {
 
                 AboutMe.render(state, $('mainBody'));
 
                 return 'aboutme';
             }
         }, {
-            path: '/(\/)?projects',
-            method () {
+            // all projects listed
+            path: '/(\/)?projects(/)?',
+            handler () {
 
                 Projects.render(state, $('mainBody'));
 
                 return 'projects';
+            }
+        }, {
+            // blog
+            path: '/(\/)?blog(/)?',
+            handler (match) {
+
+                console.log(match);
+
+                return 'blog';
             }
         }],
 
@@ -44,7 +55,9 @@ module.exports = function (state) {
                 let regExp = new RegExp(route.path);
 
                 if (regExp.exec(hash)) {
-                    _updateSelected(route.method());
+                    // TODO: passing the hash? code smell, extract the params
+                    // and pass to method
+                    _updateSelected(route.handler(hash));
                 }
             });
         },

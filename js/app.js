@@ -6,8 +6,9 @@
         router = require('./lib/router');
 
     // fetch all dependencies
-    fetch.get(['/content/projects.json', '/content/content.json']).then(function (config) {
+    fetch.get(['/content/projects.json', '/content/content.json', 'content/blog.json']).then(function (config) {
 
+        console.log(config);
         // start router
         router(config).start();
 
