@@ -12,7 +12,7 @@
     },
     {
         "id": "blog",
-        "icon": "",
+        "icon": "\ue600",
         "href": "/#/blog",
         "nav": "Blog",
         "title": "Blogger",
