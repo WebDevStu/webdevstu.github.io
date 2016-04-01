@@ -8,7 +8,8 @@ var $ = function $(id) {
 Navigation = require('../components/navigation.jsx'),
     Footer = require('../components/footer.jsx'),
     Projects = require('../components/projects.jsx'),
-    AboutMe = require('../components/about.jsx');
+    AboutMe = require('../components/about.jsx'),
+    Blog = require('../components/blog.jsx');
 
 module.exports = function (state) {
 
@@ -36,7 +37,7 @@ module.exports = function (state) {
         path: '/(\/)?blog(/)?',
         handler: function handler(match) {
 
-            console.log(match);
+            Blog.render(state, $('mainBody'));
 
             return 'blog';
         }
