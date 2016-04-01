@@ -9,7 +9,8 @@ Navigation = require('../components/navigation.jsx'),
     Footer = require('../components/footer.jsx'),
     Projects = require('../components/projects.jsx'),
     AboutMe = require('../components/about.jsx'),
-    Blog = require('../components/blog.jsx');
+    Blog = require('../components/blog.jsx'),
+    Article = require('../components/article.jsx');
 
 module.exports = function (state) {
 
@@ -17,7 +18,7 @@ module.exports = function (state) {
     var _routes = [{
         // about me
         path: '/(\/)?about\-me(/)?',
-        handler: function handler() {
+        handler: function handler(hash, match) {
 
             AboutMe.render(state, $('mainBody'));
 
@@ -26,16 +27,26 @@ module.exports = function (state) {
     }, {
         // all projects listed
         path: '/(\/)?projects(/)?',
-        handler: function handler() {
+        handler: function handler(hash, match) {
 
             Projects.render(state, $('mainBody'));
 
             return 'projects';
         }
     }, {
+        path: '/blog/(.*)?',
+        handler: function handler(hash, match) {
+
+            Article.render(state, $('mainBody'), match[1]);
+
+            return 'blog';
+        }
+    }, {
         // blog
-        path: '/(\/)?blog(/)?',
-        handler: function handler(match) {
+        path: '/(\/)?blog',
+        handler: function handler(hash, match) {
+
+            console.log(match);
 
             Blog.render(state, $('mainBody'));
 
@@ -53,14 +64,17 @@ module.exports = function (state) {
 
         var hash = location.hash;
 
-        _routes.forEach(function (route) {
+        _routes.find(function (route) {
 
-            var regExp = new RegExp(route.path);
+            var regExp = new RegExp(route.path),
+                match = regExp.exec(hash);
 
-            if (regExp.exec(hash)) {
+            if (match) {
                 // TODO: passing the hash? code smell, extract the params
                 // and pass to method
-                _updateSelected(route.handler(hash));
+                _updateSelected(route.handler(hash, match));
+
+                return true;
             }
         });
     },

@@ -2,9 +2,11 @@
 
 var parser = function parser() {
 
-    var _whitelist = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul', 'br', 'hr'],
+    var _whitelist = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul'],
         _regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
-        _tagExp = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/),
+        _tagExp = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/g),
+        _jsExp = new RegExp(/javascript:/g),
+        _asciiExp = new RegExp(/%(.*?)\ /g),
         _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 
 
@@ -74,6 +76,11 @@ var parser = function parser() {
                     // the content
                     content = content.replace(match[0], match[2]);
                 }
+            }
+
+            // convert faked self closing chars
+            while ((match = _asciiExp.exec(content)) !== null) {
+                content = content.replace(match[0], '<' + match[1] + '/>');
             }
 
             return content;
