@@ -28,18 +28,26 @@ module.exports = function (state) {
             Projects.render(state, $('mainBody'));
         }
     }, {
+        // all blog articles
         path: '/blog/(.*)?',
         handler: function handler(match) {
             Article.render(state, $('mainBody'), match[1]);
         }
     }, {
-        // blog
+        // blog default route
         path: '/(\/)?blog',
         handler: function handler() {
             Blog.render(state, $('mainBody'));
         }
     }],
-        _defaultRoute = function _defaultRoute() {
+
+
+    /**
+     * the default fall back route
+     *
+     * @method _defaultRoute
+     */
+    _defaultRoute = function _defaultRoute() {
         location.hash = '#/projects';
     },
 

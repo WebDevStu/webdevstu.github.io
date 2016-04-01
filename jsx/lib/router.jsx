@@ -26,12 +26,13 @@ module.exports = function (state) {
                 Projects.render(state, $('mainBody'));
             }
         }, {
+            // all blog articles
             path: '/blog/(.*)?',
             handler (match) {
                 Article.render(state, $('mainBody'), match[1]);
             }
         }, {
-            // blog
+            // blog default route
             path: '/(\/)?blog',
             handler () {
                 Blog.render(state, $('mainBody'));
@@ -39,9 +40,15 @@ module.exports = function (state) {
         }],
 
 
+        /**
+         * the default fall back route
+         *
+         * @method _defaultRoute
+         */
         _defaultRoute = () => {
             location.hash = '#/projects';
         },
+
 
         /**
          * event callback for when popstate event if fired, finds the first
