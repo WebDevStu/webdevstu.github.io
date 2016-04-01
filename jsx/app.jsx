@@ -12,11 +12,10 @@
         '/content/blog.json'
     ]).then((config) => {
 
-        console.log(config);
         // start router
         router(config).start();
 
         // set default hash to trigger on the router
-        location.hash = location.hash || '#/projects';
+        location.hash = location.hash || router.defaultRoute;
     });
 }) ();

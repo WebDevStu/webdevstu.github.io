@@ -9,12 +9,11 @@
     // fetch all dependencies
     fetch.get(['/content/projects.json', '/content/content.json', '/content/blog.json']).then(function (config) {
 
-        console.log(config);
         // start router
         router(config).start();
 
         // set default hash to trigger on the router
-        location.hash = location.hash || '#/projects';
+        location.hash = location.hash || router.defaultRoute;
     });
 })();
 
@@ -80,12 +79,16 @@ var React       = require('react'),
 
 // export
 module.exports = {
-    
+
     render: function (props, el, key) {
 
         var item = props.blog.find(function (article) {
             return article.id === key;
         });
+
+        if (!item) {
+            throw null;
+        }
 
         return ReactDOM.render(React.createElement(Article, React.__spread({},  item)), el);
     }
@@ -304,7 +307,6 @@ var parser = function parser() {
     var _whitelist = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul'],
         _regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
         _tagExp = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/g),
-        _jsExp = new RegExp(/javascript:/g),
         _asciiExp = new RegExp(/%(.*?)\ /g),
         _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 
@@ -366,9 +368,14 @@ var parser = function parser() {
 
                 if (_whitelist.indexOf(match[3]) >= 0) {
 
+                    // take care of the square braces
                     parsed = parsed.replace(/\[/g, '<');
                     parsed = parsed.replace(/\]/g, '>');
 
+                    // remove any onclick injected into the tag
+                    parsed = parsed.replace(/onclick/gi, 'data-null');
+
+                    // update the content
                     content = content.replace(match[0], parsed);
                 } else {
                     // if outside of whitelist remove [] tags and just display
@@ -377,7 +384,7 @@ var parser = function parser() {
                 }
             }
 
-            // convert faked self closing chars
+            // convert self closing chars
             while ((match = _asciiExp.exec(content)) !== null) {
                 content = content.replace(match[0], '<' + match[1] + '/>');
             }
@@ -426,65 +433,59 @@ module.exports = function (state) {
     var _routes = [{
         // about me
         path: '/(\/)?about\-me(/)?',
-        handler: function handler(hash, match) {
-
+        handler: function handler() {
             AboutMe.render(state, $('mainBody'));
-
-            return 'aboutme';
         }
     }, {
         // all projects listed
         path: '/(\/)?projects(/)?',
-        handler: function handler(hash, match) {
-
+        handler: function handler(match) {
             Projects.render(state, $('mainBody'));
-
-            return 'projects';
         }
     }, {
         path: '/blog/(.*)?',
-        handler: function handler(hash, match) {
-
+        handler: function handler(match) {
             Article.render(state, $('mainBody'), match[1]);
-
-            return 'blog';
         }
     }, {
         // blog
         path: '/(\/)?blog',
-        handler: function handler(hash, match) {
-
-            console.log(match);
-
+        handler: function handler() {
             Blog.render(state, $('mainBody'));
-
-            return 'blog';
         }
     }],
+        _defaultRoute = function _defaultRoute() {
+        location.hash = '#/projects';
+    },
 
 
     /**
-     * event callback for when popstate event if fired
+     * event callback for when popstate event if fired, finds the first
+     * match and allows handler to run
      *
      * @method _onHashChange
      */
     _onHashChange = function _onHashChange() {
 
-        var hash = location.hash;
-
-        _routes.find(function (route) {
+        var route = _routes.find(function (route) {
 
             var regExp = new RegExp(route.path),
-                match = regExp.exec(hash);
+                match = regExp.exec(location.hash);
 
             if (match) {
-                // TODO: passing the hash? code smell, extract the params
-                // and pass to method
-                _updateSelected(route.handler(hash, match));
-
+                try {
+                    _updateSelected(route.handler(match));
+                } catch (e) {
+                    _defaultRoute();
+                }
                 return true;
             }
         });
+
+        // catch all for none routes
+        if (!route) {
+            _defaultRoute();
+        }
     },
 
 
@@ -534,7 +535,17 @@ module.exports = function (state) {
 
             // call first route
             _onHashChange();
-        }
+        },
+
+
+        /**
+         * expose internal method for setting default route
+         *
+         * @TODO extend this idea as we'll need 404 for incorrect typed hashes
+         *
+         * @method defaultRoute
+         */
+        defaultRoute: _defaultRoute
     };
 };
 

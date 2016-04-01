@@ -16,66 +16,60 @@ module.exports = function (state) {
     const _routes = [{
             // about me
             path: '/(\/)?about\-me(/)?',
-            handler (hash, match) {
-
+            handler () {
                 AboutMe.render(state, $('mainBody'));
-
-                return 'aboutme';
             }
         }, {
             // all projects listed
             path: '/(\/)?projects(/)?',
-            handler (hash, match) {
-
+            handler (match) {
                 Projects.render(state, $('mainBody'));
-
-                return 'projects';
             }
         }, {
             path: '/blog/(.*)?',
-            handler (hash, match) {
-
+            handler (match) {
                 Article.render(state, $('mainBody'), match[1]);
-
-                return 'blog';
             }
         }, {
             // blog
             path: '/(\/)?blog',
-            handler (hash, match) {
-
-                console.log(match);
-
-
+            handler () {
                 Blog.render(state, $('mainBody'));
-
-                return 'blog';
             }
         }],
 
 
+        _defaultRoute = () => {
+            location.hash = '#/projects';
+        },
+
         /**
-         * event callback for when popstate event if fired
+         * event callback for when popstate event if fired, finds the first
+         * match and allows handler to run
          *
          * @method _onHashChange
          */
         _onHashChange = () => {
 
-            var hash = location.hash;
-
-            _routes.find((route) => {
+            let route = _routes.find((route) => {
 
                 let regExp = new RegExp(route.path),
-                    match = regExp.exec(hash);
+                    match = regExp.exec(location.hash);
 
                 if (match) {
-                    // TODO: passing the hash? code smell, extract the params
-                    // and pass to method
-                    _updateSelected(route.handler(hash, match));
-
+                    try{
+                        _updateSelected(route.handler(match));
+                    } catch (e) {
+                        _defaultRoute();
+                    }
                     return true;
                 }
             });
+
+            // catch all for none routes
+            if (!route) {
+                _defaultRoute();
+            }
         },
 
 
@@ -87,7 +81,7 @@ module.exports = function (state) {
          */
         _updateSelected = (id) => {
 
-            var last = state.content.find((item) => item.selected),
+            let last = state.content.find((item) => item.selected),
                 item = state.content.find((item) => item.id === id);
 
             if (last) {
@@ -121,6 +115,15 @@ module.exports = function (state) {
 
             // call first route
             _onHashChange();
-        }
+        },
+
+        /**
+         * expose internal method for setting default route
+         *
+         * @TODO extend this idea as we'll need 404 for incorrect typed hashes
+         *
+         * @method defaultRoute
+         */
+        defaultRoute: _defaultRoute
     };
 };

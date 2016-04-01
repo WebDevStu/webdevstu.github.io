@@ -27,12 +27,16 @@ var React       = require('react'),
 
 // export
 module.exports = {
-    
+
     render: function (props, el, key) {
 
         var item = props.blog.find(function (article) {
             return article.id === key;
         });
+
+        if (!item) {
+            throw null;
+        }
 
         return ReactDOM.render(<Article {...item} />, el);
     }

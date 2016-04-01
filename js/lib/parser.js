@@ -5,7 +5,6 @@ var parser = function parser() {
     var _whitelist = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul'],
         _regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
         _tagExp = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/g),
-        _jsExp = new RegExp(/javascript:/g),
         _asciiExp = new RegExp(/%(.*?)\ /g),
         _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 
@@ -67,9 +66,14 @@ var parser = function parser() {
 
                 if (_whitelist.indexOf(match[3]) >= 0) {
 
+                    // take care of the square braces
                     parsed = parsed.replace(/\[/g, '<');
                     parsed = parsed.replace(/\]/g, '>');
 
+                    // remove any onclick injected into the tag
+                    parsed = parsed.replace(/onclick/gi, 'data-null');
+
+                    // update the content
                     content = content.replace(match[0], parsed);
                 } else {
                     // if outside of whitelist remove [] tags and just display
@@ -78,7 +82,7 @@ var parser = function parser() {
                 }
             }
 
-            // convert faked self closing chars
+            // convert self closing chars
             while ((match = _asciiExp.exec(content)) !== null) {
                 content = content.replace(match[0], '<' + match[1] + '/>');
             }

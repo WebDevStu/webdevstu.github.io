@@ -18,65 +18,59 @@ module.exports = function (state) {
     var _routes = [{
         // about me
         path: '/(\/)?about\-me(/)?',
-        handler: function handler(hash, match) {
-
+        handler: function handler() {
             AboutMe.render(state, $('mainBody'));
-
-            return 'aboutme';
         }
     }, {
         // all projects listed
         path: '/(\/)?projects(/)?',
-        handler: function handler(hash, match) {
-
+        handler: function handler(match) {
             Projects.render(state, $('mainBody'));
-
-            return 'projects';
         }
     }, {
         path: '/blog/(.*)?',
-        handler: function handler(hash, match) {
-
+        handler: function handler(match) {
             Article.render(state, $('mainBody'), match[1]);
-
-            return 'blog';
         }
     }, {
         // blog
         path: '/(\/)?blog',
-        handler: function handler(hash, match) {
-
-            console.log(match);
-
+        handler: function handler() {
             Blog.render(state, $('mainBody'));
-
-            return 'blog';
         }
     }],
+        _defaultRoute = function _defaultRoute() {
+        location.hash = '#/projects';
+    },
 
 
     /**
-     * event callback for when popstate event if fired
+     * event callback for when popstate event if fired, finds the first
+     * match and allows handler to run
      *
      * @method _onHashChange
      */
     _onHashChange = function _onHashChange() {
 
-        var hash = location.hash;
-
-        _routes.find(function (route) {
+        var route = _routes.find(function (route) {
 
             var regExp = new RegExp(route.path),
-                match = regExp.exec(hash);
+                match = regExp.exec(location.hash);
 
             if (match) {
-                // TODO: passing the hash? code smell, extract the params
-                // and pass to method
-                _updateSelected(route.handler(hash, match));
-
+                try {
+                    _updateSelected(route.handler(match));
+                } catch (e) {
+                    _defaultRoute();
+                }
                 return true;
             }
         });
+
+        // catch all for none routes
+        if (!route) {
+            _defaultRoute();
+        }
     },
 
 
@@ -126,6 +120,16 @@ module.exports = function (state) {
 
             // call first route
             _onHashChange();
-        }
+        },
+
+
+        /**
+         * expose internal method for setting default route
+         *
+         * @TODO extend this idea as we'll need 404 for incorrect typed hashes
+         *
+         * @method defaultRoute
+         */
+        defaultRoute: _defaultRoute
     };
 };
