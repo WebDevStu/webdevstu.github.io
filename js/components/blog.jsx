@@ -19,6 +19,10 @@ var React       = require('react'),
                     <a href={"/#/blog/" + article.id}>
                         <h5 className="title">{article.title}</h5>
                         <p>{article.description}</p>
+
+                        <ul className="links">
+                            <li>{parser.date(article.published)}</li>
+                        </ul>
                     </a>
                 </li>
             );

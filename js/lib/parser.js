@@ -4,7 +4,37 @@ var parser = function parser() {
 
     var _whitelist = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul', 'br', 'hr'],
         _regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
-        _tagExp = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/);
+        _tagExp = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/),
+        _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+
+
+    /**
+     * adds the ordinal to the supplied number
+     *
+     * @method
+     * @param   {Number} day [the day of the month to evaluate]
+     * @returns {String}     [the day of the month and ordinal]
+     */
+    _addOrdinal = function _addOrdinal(day) {
+
+        var ordinal = void 0;
+
+        switch (day) {
+            case 1:
+            case 21:
+            case 31:
+                ordinal = 'st';
+                break;
+            case 2:
+            case 22:
+                ordinal = 'nd';
+                break;
+            default:
+                ordinal = 'th';
+        }
+
+        return day + ordinal;
+    };
 
     return {
 
@@ -47,6 +77,22 @@ var parser = function parser() {
             }
 
             return content;
+        },
+
+
+        /**
+         * parse the date time string into a nice format
+         *
+         * @method  date
+         * @param   {String} dateTime [date time string]
+         * @returns {String}          [formatted date string]
+         */
+        date: function date(dateTime) {
+
+            // 1st Apr 2016
+            var date = new Date(dateTime);
+
+            return [_addOrdinal(date.getDate()), _months[date.getMonth()], date.getFullYear()].join(' ');
         }
     };
 };
