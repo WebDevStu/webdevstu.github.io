@@ -1,6 +1,6 @@
 
 
-const parser = function () {
+const parser = () => {
 
     const
         _safeTags     = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul'],
@@ -37,7 +37,27 @@ const parser = function () {
             }
 
             return day + ordinal;
+        },
+
+
+        /**
+         * find method takes care of the while loops and calls a predicate
+         * method for each
+         *
+         * @method  _find
+         * @param   {String} string      [content to apply the pattern to]
+         * @param   {RegExp} pattern     [the expression to execute]
+         * @param   {Function} predicate [callback for each match in the loop]
+         */
+        _find = (string, pattern, predicate) => {
+
+            let match;
+
+            while ((match = pattern.exec(string)) !== null) {
+                predicate(match);
+            }
         };
+        
 
     return {
 
@@ -56,13 +76,14 @@ const parser = function () {
                 parsed,
                 attr;
 
+
             // blanket refuse and injected <HTMLtags>
-            while ((match = _tagPattern.exec(content)) !== null) {
+            _find(content, _tagPattern, (match) => {
                 content = content.replace(match[0], ' ');
-            }
+            });
 
             // convert the [ ] format tags to true HTML (if in whitelist)
-            while ((match = _pattern.exec(content)) !== null) {
+            _find(content, _pattern, (match) => {
 
                 parsed = match[0];
 
@@ -81,18 +102,18 @@ const parser = function () {
                 }
 
                 // now manage the html attributes set in the tag
-                while ((attr = _attrPattern.exec(match[1])) !== null) {
+                _find(match[1], _attrPattern, (attr) => {
 
                     if (_safeAttr.indexOf(attr[1]) === -1) {
                         content = content.replace(attr.input, attr.input.replace(attr[1], 'data-null'));
                     }
-                }
-            }
+                });
+            });
 
             // convert self closing chars
-            while ((match = _asciiPattern.exec(content)) !== null) {
+            _find(content, _asciiPattern, (match) => {
                 content = content.replace(match[0], '<' + match[1] + '/>');
-            }
+            });
 
             return content;
         },

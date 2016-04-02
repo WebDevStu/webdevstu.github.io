@@ -339,6 +339,25 @@ var parser = function parser() {
         }
 
         return day + ordinal;
+    },
+
+
+    /**
+     * find method takes care of the while loops and calls a predicate
+     * method for each
+     *
+     * @method  _find
+     * @param   {String} string      [content to apply the pattern to]
+     * @param   {RegExp} pattern     [the expression to execute]
+     * @param   {Function} predicate [callback for each match in the loop]
+     */
+    _find = function _find(string, pattern, predicate) {
+
+        var match = void 0;
+
+        while ((match = pattern.exec(string)) !== null) {
+            predicate(match);
+        }
     };
 
     return {
@@ -360,12 +379,12 @@ var parser = function parser() {
                 attr = void 0;
 
             // blanket refuse and injected <HTMLtags>
-            while ((match = _tagPattern.exec(content)) !== null) {
+            _find(content, _tagPattern, function (match) {
                 content = content.replace(match[0], ' ');
-            }
+            });
 
             // convert the [ ] format tags to true HTML (if in whitelist)
-            while ((match = _pattern.exec(content)) !== null) {
+            _find(content, _pattern, function (match) {
 
                 parsed = match[0];
 
@@ -384,18 +403,18 @@ var parser = function parser() {
                 }
 
                 // now manage the html attributes set in the tag
-                while ((attr = _attrPattern.exec(match[1])) !== null) {
+                _find(match[1], _attrPattern, function (attr) {
 
                     if (_safeAttr.indexOf(attr[1]) === -1) {
                         content = content.replace(attr.input, attr.input.replace(attr[1], 'data-null'));
                     }
-                }
-            }
+                });
+            });
 
             // convert self closing chars
-            while ((match = _asciiPattern.exec(content)) !== null) {
+            _find(content, _asciiPattern, function (match) {
                 content = content.replace(match[0], '<' + match[1] + '/>');
-            }
+            });
 
             return content;
         },
