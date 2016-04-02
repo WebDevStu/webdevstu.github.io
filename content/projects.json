@@ -26,7 +26,7 @@
         "demo": "-master"
     },
     {
-        "id": "projecteuler",
+        "id": "projecteuler.net",
         "title": "Project Euler",
         "content": [
             "A fall back project, to coin the description from project Eulers website",

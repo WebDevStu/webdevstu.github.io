@@ -304,11 +304,13 @@ module.exports = {
 
 var parser = function parser() {
 
-    var _whitelist = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul'],
-        _regExp = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/g),
-        _tagExp = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/g),
-        _asciiExp = new RegExp(/%(.*?)\ /g),
+    var _safeTags = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul'],
+        _safeAttr = ['accesskey', 'alt', 'class', 'data-', 'disabled', 'download', 'href', 'id', 'itemprop', 'target', 'value'],
         _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        _pattern = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/, 'g'),
+        _tagPattern = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/, 'g'),
+        _attrPattern = new RegExp(/\s([A-Za-z].*?)="/, 'g'),
+        _asciiPattern = new RegExp(/%(.*?)\s/, 'g'),
 
 
     /**
@@ -354,26 +356,24 @@ var parser = function parser() {
         parse: function parse(content) {
 
             var match = void 0,
-                parsed = void 0;
+                parsed = void 0,
+                attr = void 0;
 
             // blanket refuse and injected <HTMLtags>
-            while ((match = _tagExp.exec(content)) !== null) {
+            while ((match = _tagPattern.exec(content)) !== null) {
                 content = content.replace(match[0], ' ');
             }
 
             // convert the [ ] format tags to true HTML (if in whitelist)
-            while ((match = _regExp.exec(content)) !== null) {
+            while ((match = _pattern.exec(content)) !== null) {
 
                 parsed = match[0];
 
-                if (_whitelist.indexOf(match[3]) >= 0) {
+                if (_safeTags.indexOf(match[3]) >= 0) {
 
                     // take care of the square braces
                     parsed = parsed.replace(/\[/g, '<');
                     parsed = parsed.replace(/\]/g, '>');
-
-                    // remove any onclick injected into the tag
-                    parsed = parsed.replace(/onclick/gi, 'data-null');
 
                     // update the content
                     content = content.replace(match[0], parsed);
@@ -382,10 +382,18 @@ var parser = function parser() {
                     // the content
                     content = content.replace(match[0], match[2]);
                 }
+
+                // now manage the html attributes set in the tag
+                while ((attr = _attrPattern.exec(match[1])) !== null) {
+
+                    if (_safeAttr.indexOf(attr[1]) === -1) {
+                        content = content.replace(attr.input, attr.input.replace(attr[1], 'data-null'));
+                    }
+                }
             }
 
             // convert self closing chars
-            while ((match = _asciiExp.exec(content)) !== null) {
+            while ((match = _asciiPattern.exec(content)) !== null) {
                 content = content.replace(match[0], '<' + match[1] + '/>');
             }
 
