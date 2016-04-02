@@ -3,15 +3,13 @@
 const parser = function () {
 
     const
-        _safeTags    = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul'],
-        _safeAttr    = ['accesskey', 'alt', 'class', 'data-', 'disabled', 'download', 'href', 'id', 'itemprop', 'target', 'value'],
-        _months      = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-
+        _safeTags     = ['a', 'b', 'blockquote', 'code', 'del', 'dd', 'dl', 'dt', 'em', 'h1', 'h2', 'h3', 'i', 'img', 'li', 'oi', 'p', 'pre', 's', 'span', 'sup', 'sub', 'strong', 'ul'],
+        _safeAttr     = ['accesskey', 'alt', 'class', 'data-icon', 'disabled', 'download', 'href', 'id', 'itemprop', 'target', 'value'],
+        _months       = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         _pattern      = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/, 'g'),
         _tagPattern   = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/, 'g'),
-        _attrPattern  = new RegExp(/\s([A-Za-z].*?)="/, 'g'),
+        _attrPattern  = new RegExp(/\s([A-Za-z\-].*?)="/, 'g'),
         _asciiPattern = new RegExp(/%(.*?)\s/, 'g'),
-
 
         /**
          * adds the ordinal to the supplied number
