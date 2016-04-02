@@ -481,11 +481,13 @@ module.exports = function (state) {
                 match = regExp.exec(location.hash);
 
             if (match) {
+
                 try {
                     _updateSelected(route.handler(match));
                 } catch (e) {
                     _defaultRoute();
                 }
+
                 return true;
             }
         });
