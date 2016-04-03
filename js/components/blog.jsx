@@ -4,6 +4,27 @@ var React       = require('react'),
     parser      = require('../lib/parser'),
 
     /**
+     * sort method for blog items
+     *
+     * @method  sort
+     * @param   {Object} a [item in blog]
+     * @param   {Object} b [item in blog]
+     * @returns {Number}   [sorting instruction]
+     */
+    sort = function (a, b) {
+
+        var dateA = +new Date(a.published),
+            dateB = +new Date(b.published);
+
+        if (dateA < dateB) {
+            return 1;
+        }
+
+        return -1;
+    },
+
+
+    /**
      * article iterator
      *
      * @method  Article
@@ -55,7 +76,19 @@ var React       = require('react'),
 
 // export
 module.exports = {
+
+    /**
+     * exposed render method
+     *
+     * @method  render
+     * @param   {Object} props  [the props to apply to the views]
+     * @param   {DOM.Object} el [the dom object to append them to]
+     * @returns {ReactDOM}      [the render metho]
+     */
     render: function (props, el) {
+        
+        props.blog.sort(sort);
+
         return ReactDOM.render(<Articles {...props} />, el);
     }
 };

@@ -101,6 +101,27 @@ var React       = require('react'),
     parser      = require('../lib/parser'),
 
     /**
+     * sort method for blog items
+     *
+     * @method  sort
+     * @param   {Object} a [item in blog]
+     * @param   {Object} b [item in blog]
+     * @returns {Number}   [sorting instruction]
+     */
+    sort = function (a, b) {
+
+        var dateA = +new Date(a.published),
+            dateB = +new Date(b.published);
+
+        if (dateA < dateB) {
+            return 1;
+        }
+
+        return -1;
+    },
+
+
+    /**
      * article iterator
      *
      * @method  Article
@@ -152,7 +173,19 @@ var React       = require('react'),
 
 // export
 module.exports = {
+
+    /**
+     * exposed render method
+     *
+     * @method  render
+     * @param   {Object} props  [the props to apply to the views]
+     * @param   {DOM.Object} el [the dom object to append them to]
+     * @returns {ReactDOM}      [the render metho]
+     */
     render: function (props, el) {
+        
+        props.blog.sort(sort);
+
         return ReactDOM.render(React.createElement(Articles, React.__spread({},  props)), el);
     }
 };
@@ -182,6 +215,9 @@ module.exports = {
 /** @jsx React.DOM */
 var React       = require('react'),
     ReactDOM    = require('react-dom'),
+
+    navigationEl = null,
+
     Navigation  = React.createClass({displayName: "Navigation",
 
         render: function () {
@@ -198,7 +234,12 @@ var React       = require('react'),
     });
 
 module.exports = {
+
     render: function (props, el) {
+
+        el = el || navigationEl;
+        navigationEl = el;
+        
         return ReactDOM.render(React.createElement(Navigation, React.__spread({},  props)), el);
     }
 };
@@ -334,6 +375,10 @@ var parser = function parser() {
             case 22:
                 ordinal = 'nd';
                 break;
+            case 3:
+            case 23:
+                ordinal = 'rd';
+                break;
             default:
                 ordinal = 'th';
         }
@@ -457,29 +502,34 @@ Navigation = require('../components/navigation.jsx'),
 module.exports = function (state) {
 
     // privates
-    var _routes = [{
+    var _$mainBody = $('mainBody'),
+        _routes = [{
         // about me
         path: '/(\/)?about\-me(/)?',
         handler: function handler() {
-            AboutMe.render(state, $('mainBody'));
+            AboutMe.render(state, _$mainBody);
+            return 'about-me';
         }
     }, {
         // all projects listed
         path: '/(\/)?projects(/)?',
         handler: function handler(match) {
-            Projects.render(state, $('mainBody'));
+            Projects.render(state, _$mainBody);
+            return 'projects';
         }
     }, {
         // all blog articles
         path: '/blog/(.*)?',
         handler: function handler(match) {
-            Article.render(state, $('mainBody'), match[1]);
+            Article.render(state, _$mainBody, match[1]);
+            return 'blog';
         }
     }, {
         // blog default route
         path: '/(\/)?blog',
         handler: function handler() {
-            Blog.render(state, $('mainBody'));
+            Blog.render(state, _$mainBody);
+            return 'blog';
         }
     }],
 
@@ -549,7 +599,7 @@ module.exports = function (state) {
             item.selected = !!item;
         }
 
-        Navigation.render(state, $('nav'));
+        Navigation.render(state);
     };
 
     // public methods

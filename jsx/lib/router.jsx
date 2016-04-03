@@ -13,29 +13,35 @@ const
 module.exports = function (state) {
 
     // privates
-    const _routes = [{
+    const
+        _$mainBody = $('mainBody'),
+        _routes = [{
             // about me
             path: '/(\/)?about\-me(/)?',
             handler () {
-                AboutMe.render(state, $('mainBody'));
+                AboutMe.render(state, _$mainBody);
+                return 'about-me';
             }
         }, {
             // all projects listed
             path: '/(\/)?projects(/)?',
             handler (match) {
-                Projects.render(state, $('mainBody'));
+                Projects.render(state, _$mainBody);
+                return 'projects';
             }
         }, {
             // all blog articles
             path: '/blog/(.*)?',
             handler (match) {
-                Article.render(state, $('mainBody'), match[1]);
+                Article.render(state, _$mainBody, match[1]);
+                return 'blog';
             }
         }, {
             // blog default route
             path: '/(\/)?blog',
             handler () {
-                Blog.render(state, $('mainBody'));
+                Blog.render(state, _$mainBody);
+                return 'blog';
             }
         }],
 
@@ -101,7 +107,7 @@ module.exports = function (state) {
                 item.selected = !!item;
             }
 
-            Navigation.render(state, $('nav'));
+            Navigation.render(state);
         };
 
 

@@ -32,6 +32,10 @@ var parser = function parser() {
             case 22:
                 ordinal = 'nd';
                 break;
+            case 3:
+            case 23:
+                ordinal = 'rd';
+                break;
             default:
                 ordinal = 'th';
         }

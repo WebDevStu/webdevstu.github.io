@@ -13,5 +13,19 @@
         "tags": [
             "code"
         ]
+    },
+    {
+        "id": "item-two",
+        "title": "Second Item - testing sorting methods",
+        "description": "Lorem ipsum Fusce non orci ut odio dignissim condimentum sed at velit. Donec ac eros at eros vestibulum dapibus. Vivamus in velit nec magna imperdiet tempus. Praesent ut nulla lectus. Etiam laoreet eleifend mi in malesuada.",
+        "content": [
+            "one",
+            "two",
+            "three"
+        ],
+        "published": "2016-04-03T11:37:28+00:00",
+        "tags": [
+            "code"
+        ]
     }
 ]

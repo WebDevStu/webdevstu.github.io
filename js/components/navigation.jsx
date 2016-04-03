@@ -1,6 +1,9 @@
 /** @jsx React.DOM */
 var React       = require('react'),
     ReactDOM    = require('react-dom'),
+
+    navigationEl = null,
+
     Navigation  = React.createClass({
 
         render: function () {
@@ -17,7 +20,12 @@ var React       = require('react'),
     });
 
 module.exports = {
+
     render: function (props, el) {
+
+        el = el || navigationEl;
+        navigationEl = el;
+        
         return ReactDOM.render(<Navigation {...props} />, el);
     }
 };
