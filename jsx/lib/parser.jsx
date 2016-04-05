@@ -9,7 +9,7 @@ const parser = () => {
         _pattern      = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/, 'g'),
         _tagPattern   = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/, 'g'),
         _attrPattern  = new RegExp(/\s([A-Za-z\-].*?)="/, 'g'),
-        _asciiPattern = new RegExp(/%(.*?)\s/, 'g'),
+        _asciiPattern = new RegExp(/\$\((.*?)\)/, 'g'),
 
         /**
          * adds the ordinal to the supplied number
@@ -53,7 +53,7 @@ const parser = () => {
          * @param   {RegExp} pattern     [the expression to execute]
          * @param   {Function} predicate [callback for each match in the loop]
          */
-        _find = (string, pattern, predicate) => {
+        _find = (pattern, string, predicate) => {
 
             let match;
 
@@ -80,14 +80,13 @@ const parser = () => {
                 parsed,
                 attr;
 
-
             // blanket refuse and injected <HTMLtags>
-            _find(content, _tagPattern, (match) => {
+            _find(_tagPattern, content, (match) => {
                 content = content.replace(match[0], ' ');
             });
 
             // convert the [ ] format tags to true HTML (if in whitelist)
-            _find(content, _pattern, (match) => {
+            _find(_pattern, content, (match) => {
 
                 parsed = match[0];
 
@@ -106,7 +105,7 @@ const parser = () => {
                 }
 
                 // now manage the html attributes set in the tag
-                _find(match[1], _attrPattern, (attr) => {
+                _find(_attrPattern, match[1], (attr) => {
 
                     if (_safeAttr.indexOf(attr[1]) === -1) {
                         content = content.replace(attr.input, attr.input.replace(attr[1], 'data-null'));
@@ -115,7 +114,7 @@ const parser = () => {
             });
 
             // convert self closing chars
-            _find(content, _asciiPattern, (match) => {
+            _find(_asciiPattern, content, (match) => {
                 content = content.replace(match[0], '<' + match[1] + '/>');
             });
 

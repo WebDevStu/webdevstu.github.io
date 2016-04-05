@@ -6,27 +6,27 @@ var React       = require('react'),
     /**
      * introduction to the projects
      *
-     * @method  Introduction
+     * @method  ProjectIntroduction
      */
-    Introduction = React.createClass({
+    ProjectIntroduction = React.createClass({
 
-            render: function () {
+        render: function () {
 
-                var introduction = this.props.content.find(function (content) {
-                    return content.id === 'projects';
-                });
+            var introduction = this.props.content.find(function (content) {
+                return content.id === 'projects';
+            });
 
-                return (
-                    <div>
-                        <h2 className="title">Projects</h2>
-                        {
-                            introduction.content.map(function (para, index) {
-                                return <p key={index} dangerouslySetInnerHTML={{__html: parser.parse(para)}}></p>;
-                            })
-                        }
-                    </div>
-                );
-            }
+            return (
+                <div>
+                    <h2 className="title">Projects</h2>
+                    {
+                        introduction.content.map(function (para, index) {
+                            return <p key={index} dangerouslySetInnerHTML={{__html: parser.parse(para)}}></p>;
+                        })
+                    }
+                </div>
+            );
+        }
     }),
 
 
@@ -73,7 +73,7 @@ var React       = require('react'),
 
             return (
                 <div>
-                    <Introduction content={this.props.content} />
+                    <ProjectIntroduction content={this.props.content} />
                     <ul className="projects">
                         {
                             this.props.projects.map(function (project) {

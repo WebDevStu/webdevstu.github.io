@@ -8,7 +8,7 @@ var parser = function parser() {
         _pattern = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/, 'g'),
         _tagPattern = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/, 'g'),
         _attrPattern = new RegExp(/\s([A-Za-z\-].*?)="/, 'g'),
-        _asciiPattern = new RegExp(/%(.*?)\s/, 'g'),
+        _asciiPattern = new RegExp(/\$\((.*?)\)/, 'g'),
 
 
     /**
@@ -53,7 +53,7 @@ var parser = function parser() {
      * @param   {RegExp} pattern     [the expression to execute]
      * @param   {Function} predicate [callback for each match in the loop]
      */
-    _find = function _find(string, pattern, predicate) {
+    _find = function _find(pattern, string, predicate) {
 
         var match = void 0;
 
@@ -81,12 +81,12 @@ var parser = function parser() {
                 attr = void 0;
 
             // blanket refuse and injected <HTMLtags>
-            _find(content, _tagPattern, function (match) {
+            _find(_tagPattern, content, function (match) {
                 content = content.replace(match[0], ' ');
             });
 
             // convert the [ ] format tags to true HTML (if in whitelist)
-            _find(content, _pattern, function (match) {
+            _find(_pattern, content, function (match) {
 
                 parsed = match[0];
 
@@ -105,7 +105,7 @@ var parser = function parser() {
                 }
 
                 // now manage the html attributes set in the tag
-                _find(match[1], _attrPattern, function (attr) {
+                _find(_attrPattern, match[1], function (attr) {
 
                     if (_safeAttr.indexOf(attr[1]) === -1) {
                         content = content.replace(attr.input, attr.input.replace(attr[1], 'data-null'));
@@ -114,7 +114,7 @@ var parser = function parser() {
             });
 
             // convert self closing chars
-            _find(content, _asciiPattern, function (match) {
+            _find(_asciiPattern, content, function (match) {
                 content = content.replace(match[0], '<' + match[1] + '/>');
             });
 

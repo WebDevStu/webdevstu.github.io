@@ -25,6 +25,33 @@ var React       = require('react'),
 
 
     /**
+     * Introduction view
+     *
+     * @method  BlogIntroduction
+     */
+    BlogIntroduction = React.createClass({
+
+        render: function () {
+
+            var introduction = this.props.content.find(function (content) {
+                return content.id === 'blog';
+            });
+
+            return (
+                <div>
+                    <h2 className="title">Blog</h2>
+                    {
+                        introduction.content.map(function (para, index) {
+                            return <p key={index} dangerouslySetInnerHTML={{__html: parser.parse(para)}}></p>;
+                        })
+                    }
+                </div>
+            );
+        }
+    }),
+
+
+    /**
      * article iterator
      *
      * @method  Article
@@ -62,6 +89,7 @@ var React       = require('react'),
 
             return (
                 <div>
+                    <BlogIntroduction content={this.props.content} />
                     <ul className="projects">
                         {
                             this.props.blog.map(function (article) {
@@ -86,7 +114,7 @@ module.exports = {
      * @returns {ReactDOM}      [the render metho]
      */
     render: function (props, el) {
-        
+
         props.blog.sort(sort);
 
         return ReactDOM.render(<Articles {...props} />, el);

@@ -122,6 +122,33 @@ var React       = require('react'),
 
 
     /**
+     * Introduction view
+     *
+     * @method  BlogIntroduction
+     */
+    BlogIntroduction = React.createClass({displayName: "BlogIntroduction",
+
+        render: function () {
+
+            var introduction = this.props.content.find(function (content) {
+                return content.id === 'blog';
+            });
+
+            return (
+                React.createElement("div", null, 
+                    React.createElement("h2", {className: "title"}, "Blog"), 
+                    
+                        introduction.content.map(function (para, index) {
+                            return React.createElement("p", {key: index, dangerouslySetInnerHTML: {__html: parser.parse(para)}});
+                        })
+                    
+                )
+            );
+        }
+    }),
+
+
+    /**
      * article iterator
      *
      * @method  Article
@@ -159,6 +186,7 @@ var React       = require('react'),
 
             return (
                 React.createElement("div", null, 
+                    React.createElement(BlogIntroduction, {content: this.props.content}), 
                     React.createElement("ul", {className: "projects"}, 
                         
                             this.props.blog.map(function (article) {
@@ -183,7 +211,7 @@ module.exports = {
      * @returns {ReactDOM}      [the render metho]
      */
     render: function (props, el) {
-        
+
         props.blog.sort(sort);
 
         return ReactDOM.render(React.createElement(Articles, React.__spread({},  props)), el);
@@ -253,27 +281,27 @@ var React       = require('react'),
     /**
      * introduction to the projects
      *
-     * @method  Introduction
+     * @method  ProjectIntroduction
      */
-    Introduction = React.createClass({displayName: "Introduction",
+    ProjectIntroduction = React.createClass({displayName: "ProjectIntroduction",
 
-            render: function () {
+        render: function () {
 
-                var introduction = this.props.content.find(function (content) {
-                    return content.id === 'projects';
-                });
+            var introduction = this.props.content.find(function (content) {
+                return content.id === 'projects';
+            });
 
-                return (
-                    React.createElement("div", null, 
-                        React.createElement("h2", {className: "title"}, "Projects"), 
-                        
-                            introduction.content.map(function (para, index) {
-                                return React.createElement("p", {key: index, dangerouslySetInnerHTML: {__html: parser.parse(para)}});
-                            })
-                        
-                    )
-                );
-            }
+            return (
+                React.createElement("div", null, 
+                    React.createElement("h2", {className: "title"}, "Projects"), 
+                    
+                        introduction.content.map(function (para, index) {
+                            return React.createElement("p", {key: index, dangerouslySetInnerHTML: {__html: parser.parse(para)}});
+                        })
+                    
+                )
+            );
+        }
     }),
 
 
@@ -320,7 +348,7 @@ var React       = require('react'),
 
             return (
                 React.createElement("div", null, 
-                    React.createElement(Introduction, {content: this.props.content}), 
+                    React.createElement(ProjectIntroduction, {content: this.props.content}), 
                     React.createElement("ul", {className: "projects"}, 
                         
                             this.props.projects.map(function (project) {
@@ -351,7 +379,7 @@ var parser = function parser() {
         _pattern = new RegExp(/\[(.*?)\](.*?)\[\/(.*?)\]/, 'g'),
         _tagPattern = new RegExp(/(<([^>]+)>(.*?)<\/([^>]+)>)/, 'g'),
         _attrPattern = new RegExp(/\s([A-Za-z\-].*?)="/, 'g'),
-        _asciiPattern = new RegExp(/%(.*?)\s/, 'g'),
+        _asciiPattern = new RegExp(/\$\((.*?)\)/, 'g'),
 
 
     /**
@@ -396,7 +424,7 @@ var parser = function parser() {
      * @param   {RegExp} pattern     [the expression to execute]
      * @param   {Function} predicate [callback for each match in the loop]
      */
-    _find = function _find(string, pattern, predicate) {
+    _find = function _find(pattern, string, predicate) {
 
         var match = void 0;
 
@@ -424,12 +452,12 @@ var parser = function parser() {
                 attr = void 0;
 
             // blanket refuse and injected <HTMLtags>
-            _find(content, _tagPattern, function (match) {
+            _find(_tagPattern, content, function (match) {
                 content = content.replace(match[0], ' ');
             });
 
             // convert the [ ] format tags to true HTML (if in whitelist)
-            _find(content, _pattern, function (match) {
+            _find(_pattern, content, function (match) {
 
                 parsed = match[0];
 
@@ -448,7 +476,7 @@ var parser = function parser() {
                 }
 
                 // now manage the html attributes set in the tag
-                _find(match[1], _attrPattern, function (attr) {
+                _find(_attrPattern, match[1], function (attr) {
 
                     if (_safeAttr.indexOf(attr[1]) === -1) {
                         content = content.replace(attr.input, attr.input.replace(attr[1], 'data-null'));
@@ -457,7 +485,7 @@ var parser = function parser() {
             });
 
             // convert self closing chars
-            _find(content, _asciiPattern, function (match) {
+            _find(_asciiPattern, content, function (match) {
                 content = content.replace(match[0], '<' + match[1] + '/>');
             });
 
