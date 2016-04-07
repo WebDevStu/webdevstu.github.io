@@ -6,47 +6,85 @@ const
     Navigation  = require('../components/navigation.jsx'),
     Footer      = require('../components/footer.jsx'),
     Projects    = require('../components/projects.jsx'),
-    AboutMe     = require('../components/about.jsx');
+    AboutMe     = require('../components/about.jsx'),
+    Blog        = require('../components/blog.jsx'),
+    Article     = require('../components/article.jsx');
 
 module.exports = function (state) {
 
     // privates
-    const _routes = [{
-            path: '/(\/)?about\-me',
-            method () {
-
-                AboutMe.render(state, $('mainBody'));
-
+    const
+        _$mainBody = $('mainBody'),
+        _routes = [{
+            // about me
+            path: /^\!\/about\-me(\/)?/gi,
+            handler () {
+                AboutMe.render(state, _$mainBody);
                 return 'aboutme';
             }
         }, {
-            path: '/(\/)?projects',
-            method () {
-
-                Projects.render(state, $('mainBody'));
-
+            // all projects listed
+            path: /^\!\/projects(\/)?/gi,
+            handler (match) {
+                Projects.render(state, _$mainBody);
                 return 'projects';
+            }
+        }, {
+            // all blog articles
+            path: /^\!\/blog\/(.*)?/gi,
+            handler (match) {
+                Article.render(state, _$mainBody, match[1]);
+                return 'blog';
+            }
+        }, {
+            // blog default route
+            path: /^\!\/blog/gi,
+            handler () {
+                Blog.render(state, _$mainBody);
+                return 'blog';
             }
         }],
 
 
         /**
-         * event callback for when popstate event if fired
+         * the default fall back route
+         *
+         * @method _defaultRoute
+         */
+        _defaultRoute = () => {
+            location.hash = '#!/projects';
+        },
+
+
+        /**
+         * event callback for when popstate event if fired, finds the first
+         * match and allows handler to run
          *
          * @method _onHashChange
          */
         _onHashChange = () => {
 
-            var hash = location.hash;
+            let route = _routes.find((route) => {
 
-            _routes.forEach((route) => {
+                let regExp = new RegExp(route.path),
+                    match = regExp.exec(location.hash.slice(1));
 
-                let regExp = new RegExp(route.path);
+                if (match) {
 
-                if (regExp.exec(hash)) {
-                    _updateSelected(route.method());
+                    try{
+                        _updateSelected(route.handler(match));
+                    } catch (e) {
+                        _defaultRoute();
+                    }
+
+                    return true;
                 }
             });
+
+            // catch all for none routes
+            if (!route) {
+                _defaultRoute();
+            }
         },
 
 
@@ -58,7 +96,7 @@ module.exports = function (state) {
          */
         _updateSelected = (id) => {
 
-            var last = state.content.find((item) => item.selected),
+            let last = state.content.find((item) => item.selected),
                 item = state.content.find((item) => item.id === id);
 
             if (last) {
@@ -69,7 +107,7 @@ module.exports = function (state) {
                 item.selected = !!item;
             }
 
-            Navigation.render(state, $('nav'));
+            Navigation.render(state);
         };
 
 
@@ -92,6 +130,15 @@ module.exports = function (state) {
 
             // call first route
             _onHashChange();
-        }
+        },
+
+        /**
+         * expose internal method for setting default route
+         *
+         * @TODO extend this idea as we'll need 404 for incorrect typed hashes
+         *
+         * @method defaultRoute
+         */
+        defaultRoute: _defaultRoute
     };
 };

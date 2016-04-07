@@ -12,6 +12,10 @@
             right: 40px;
             color: rgba($color-highlight, 0.1);
         }
+        a, a:visited{
+            text-decoration: none;
+            color: inherit;
+        }
     }
     .title{
         font-size: 2em;

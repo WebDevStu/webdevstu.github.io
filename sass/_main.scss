@@ -11,7 +11,9 @@ h2{font-size: 2em;}
 h3{font-size: 1.8em;}
 h4{font-size: 1.5em;}
 h4{font-size: 1.2em;}
-
+em{
+    font-style: italic;
+}
 blockquote,
 p{
     margin: 1.2rem 0;
@@ -32,6 +34,7 @@ blockquote:before{
 blockquote{
     padding: 4px 8px;
     margin-bottom: 10px;
+    @include border-radius(3px);
     background: darken($color-background, 4%);
 }
 section{
@@ -66,6 +69,7 @@ nav{
 
     a, a:visited{
         display: block;
+        position: relative;
         float: left;
         margin: 5px;
         padding: 20px;
@@ -83,6 +87,9 @@ nav{
 
         &:before{
             position: absolute;
+            top: 24px;
+            left: 0;
+            right: 0;
             text-align: center;
             font-size: 80px;
             color: rgba($color-highlight, 0.1);
@@ -105,7 +112,16 @@ footer{
     text-align: right;
     border-top: 5px $color-heading solid;
 }
-
+code{
+    display: block;
+    padding: 4px 8px;
+    margin-bottom: 10px;
+    font-family: monospace;
+    font-size: 16px;
+    white-space: pre;
+    @include border-radius(3px);
+    background: darken($color-background, 4%);
+}
 
 @media #{$screen-600} {
     body{

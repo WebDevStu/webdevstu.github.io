@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "description": "My site :P",
   "main": "index.js",
-  "scripts": {
-    "production": "gulp production"
-  },
-  "precommit": [
-    "production"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/WebDevStu/webdevstu.github.io.git"
