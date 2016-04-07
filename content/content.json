@@ -8,7 +8,8 @@
         "selected": false,
         "content": [
             "Some projects, old games and tech tests I re-created/completed in JavaScript. The majority of projects are completed, feel free to browse the many un-finished projects on my [a href='https://github.com/WebDevStu/']GitHub[/a]"
-        ]
+        ],
+        "status": true
     },
     {
         "id": "blog",
@@ -19,7 +20,8 @@
         "selected": false,
         "content": [
             "Some ramblings"
-        ]
+        ],
+        "status": false
     },
     {
         "id": "aboutme",
@@ -31,18 +33,21 @@
         "content": [
             "Hello, I'm [span itemprop='name']Stewart Anderson[/span], aged ~36, I live in [span itemprop='address']North Yorkshire[/span] with my wife and two children. I'm a [span itemprop='title']Software Engineer[/span] for a Network Security Company. Born in Scotland, I've lived in England the majority of my life, pursuing a career in development for the web.",
             "Outside of the web world, I'm a keen Amateur Photographer, you can find me at 11:30pm taking pictures of the stars in my back garden some nights. My other main interest is Cars, a through and through petrol head, I currently have a [a href='http://mk3capri.co.uk/']1984 Ford Capri[/a] in my garage, that I'm (very) slowly restoring to former glory. I'm never happier than when I'm photographing cars at shows throughout the country, just need to finish my car so I can show it off."
-        ]
+        ],
+        "status": true
     },
     {
         "id": "github",
         "icon": "\uf09b",
         "href": "https://github.com/WebDevStu/",
-        "nav": "GitHub"
+        "nav": "GitHub",
+        "status": true
     },
     {
         "id": "twitter",
         "icon": "\uf099",
         "href": "https://twitter.com/WebDevStu",
-        "nav": "Twitter"
+        "nav": "Twitter",
+        "status": true
     }
 ]

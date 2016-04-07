@@ -11,7 +11,12 @@ var React       = require('react'),
                 <nav>
                     {
                         this.props.content.map(function (item) {
-                            return <a className={(item.selected) ? 'selected' : ''} href={item.href} data-icon={item.icon} key={item.id}>{item.nav}</a>;
+
+                            if (item.status) {
+                                return <a className={(item.selected) ? 'selected' : ''} href={item.href} data-icon={item.icon} key={item.id}>{item.nav}</a>;
+                            }
+
+                            return '';
                         })
                     }
                 </nav>
@@ -25,7 +30,7 @@ module.exports = {
 
         el = el || navigationEl;
         navigationEl = el;
-        
+
         return ReactDOM.render(<Navigation {...props} />, el);
     }
 };

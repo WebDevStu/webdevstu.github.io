@@ -253,7 +253,12 @@ var React       = require('react'),
                 React.createElement("nav", null, 
                     
                         this.props.content.map(function (item) {
-                            return React.createElement("a", {className: (item.selected) ? 'selected' : '', href: item.href, "data-icon": item.icon, key: item.id}, item.nav);
+
+                            if (item.status) {
+                                return React.createElement("a", {className: (item.selected) ? 'selected' : '', href: item.href, "data-icon": item.icon, key: item.id}, item.nav);
+                            }
+
+                            return '';
                         })
                     
                 )
@@ -267,7 +272,7 @@ module.exports = {
 
         el = el || navigationEl;
         navigationEl = el;
-        
+
         return ReactDOM.render(React.createElement(Navigation, React.__spread({},  props)), el);
     }
 };
