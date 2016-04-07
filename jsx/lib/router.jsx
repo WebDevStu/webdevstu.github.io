@@ -17,28 +17,28 @@ module.exports = function (state) {
         _$mainBody = $('mainBody'),
         _routes = [{
             // about me
-            path: '/(\/)?about\-me(/)?',
+            path: /^\!\/about\-me(\/)?/gi,
             handler () {
                 AboutMe.render(state, _$mainBody);
                 return 'about-me';
             }
         }, {
             // all projects listed
-            path: '/(\/)?projects(/)?',
+            path: /^\!\/projects(\/)?/gi,
             handler (match) {
                 Projects.render(state, _$mainBody);
                 return 'projects';
             }
         }, {
             // all blog articles
-            path: '/blog/(.*)?',
+            path: /^\!\/blog\/(.*)?/gi,
             handler (match) {
                 Article.render(state, _$mainBody, match[1]);
                 return 'blog';
             }
         }, {
             // blog default route
-            path: '/(\/)?blog',
+            path: /^\!\/blog/gi,
             handler () {
                 Blog.render(state, _$mainBody);
                 return 'blog';
@@ -52,7 +52,7 @@ module.exports = function (state) {
          * @method _defaultRoute
          */
         _defaultRoute = () => {
-            location.hash = '#/projects';
+            location.hash = '#!/projects';
         },
 
 
@@ -67,7 +67,7 @@ module.exports = function (state) {
             let route = _routes.find((route) => {
 
                 let regExp = new RegExp(route.path),
-                    match = regExp.exec(location.hash);
+                    match = regExp.exec(location.hash.slice(1));
 
                 if (match) {
 

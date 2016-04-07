@@ -161,7 +161,7 @@ var React       = require('react'),
 
             return (
                 React.createElement("li", {className: "project", "data-icon": ""}, 
-                    React.createElement("a", {href: "/#/blog/" + article.id}, 
+                    React.createElement("a", {href: "/#!/blog/" + article.id}, 
                         React.createElement("h5", {className: "title"}, article.title), 
                         React.createElement("p", null, article.description), 
 
@@ -538,28 +538,28 @@ module.exports = function (state) {
     var _$mainBody = $('mainBody'),
         _routes = [{
         // about me
-        path: '/(\/)?about\-me(/)?',
+        path: /^\!\/about\-me(\/)?/gi,
         handler: function handler() {
             AboutMe.render(state, _$mainBody);
             return 'about-me';
         }
     }, {
         // all projects listed
-        path: '/(\/)?projects(/)?',
+        path: /^\!\/projects(\/)?/gi,
         handler: function handler(match) {
             Projects.render(state, _$mainBody);
             return 'projects';
         }
     }, {
         // all blog articles
-        path: '/blog/(.*)?',
+        path: /^\!\/blog\/(.*)?/gi,
         handler: function handler(match) {
             Article.render(state, _$mainBody, match[1]);
             return 'blog';
         }
     }, {
         // blog default route
-        path: '/(\/)?blog',
+        path: /^\!\/blog/gi,
         handler: function handler() {
             Blog.render(state, _$mainBody);
             return 'blog';
@@ -573,7 +573,7 @@ module.exports = function (state) {
      * @method _defaultRoute
      */
     _defaultRoute = function _defaultRoute() {
-        location.hash = '#/projects';
+        location.hash = '#!/projects';
     },
 
 
@@ -588,7 +588,7 @@ module.exports = function (state) {
         var route = _routes.find(function (route) {
 
             var regExp = new RegExp(route.path),
-                match = regExp.exec(location.hash);
+                match = regExp.exec(location.hash.slice(1));
 
             if (match) {
 

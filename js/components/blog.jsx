@@ -64,7 +64,7 @@ var React       = require('react'),
 
             return (
                 <li className="project" data-icon="&#xe600;">
-                    <a href={"/#/blog/" + article.id}>
+                    <a href={"/#!/blog/" + article.id}>
                         <h5 className="title">{article.title}</h5>
                         <p>{article.description}</p>
 

@@ -2,7 +2,7 @@
     {
         "id": "projects",
         "icon": "\uf02c",
-        "href": "/#/projects",
+        "href": "/#!/projects",
         "nav": "Projects",
         "title": "Projects",
         "selected": false,
@@ -14,19 +14,19 @@
     {
         "id": "blog",
         "icon": "\ue600",
-        "href": "/#/blog",
+        "href": "/#!/blog",
         "nav": "Blog",
         "title": "Blogger",
         "selected": false,
         "content": [
             "Some ramblings"
         ],
-        "status": false
+        "status": true
     },
     {
         "id": "aboutme",
         "icon": "\ue601",
-        "href": "/#/about-me",
+        "href": "/#!/about-me",
         "nav": "About",
         "title": "Who are you?",
         "selected": false,
