@@ -15,7 +15,7 @@
             "The idea for this project came after watching 8 out of 10 Cats does countdown and failing miserably at getting anywhere near a respectable word count. What do you do as a software engineer?? You automate!",
             "There is a UI to allow you to enter characters and returns the largest word in the [Apple] dictionary."
         ],
-        "demo": "-master"
+        "demo": true
     },
     {
         "id": "darts-check-out-interface",
@@ -23,7 +23,7 @@
         "content": [
             "A game that works out what darts are available for you to throw to compete a 501 game of darts. Always finishing on a double. There is an interface to select the darts you throw to keep track of your score."
         ],
-        "demo": "-master"
+        "demo": true
     },
     {
         "id": "projecteuler.net",
@@ -49,7 +49,7 @@
         "content": [
             "Playing about with canvas rendering, still work in progress, with a lot of functionality to add, currently you control the space ship and can shoot aliens down."
         ],
-        "demo": "-master"
+        "demo": true
     },
     {
         "id": "tictactoe",
@@ -57,7 +57,7 @@
         "content": [
             "Simple game recreated - currently work in progress, the computers turn only aims to block your moves. Plan to store which squares the user plays most to second guess the moves you will make..."
         ],
-        "demo": "-master"
+        "demo": true
     },
     {
         "id": "snake",
@@ -65,6 +65,6 @@
         "content": [
             "The game I wasted so much time on, on my old nokia phone. Currently work in progress."
         ],
-        "demo": "-master"
+        "demo": true
     }
 ]
