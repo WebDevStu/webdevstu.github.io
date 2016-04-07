@@ -21,7 +21,7 @@ module.exports = function (state) {
         path: /^\!\/about\-me(\/)?/gi,
         handler: function handler() {
             AboutMe.render(state, _$mainBody);
-            return 'about-me';
+            return 'aboutme';
         }
     }, {
         // all projects listed
