@@ -5,7 +5,7 @@
         "content": [
             "Famous game re-created in JavaScript, with an added tricky mode to test you."
         ],
-        "demo": "-master"
+        "demo": true
     },
 
     {
