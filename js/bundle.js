@@ -334,9 +334,9 @@ var React       = require('react'),
                     React.createElement("ul", {className: "links"}, 
                         React.createElement("li", null, React.createElement("a", {href: "https://github.com/WebDevStu/" + project.id, "data-icon": ""}, "GitHub")), 
                         
-                            (project.demo) ? React.createElement("li", null, React.createElement("a", {href: '/' + project.id, "data-icon": ""}, "Demo")) : '',
+                            (project.demo) ? React.createElement("li", null, React.createElement("a", {href: '/' + project.id, "data-icon": ""}, "Demo")) : '',
                             (project.link) ? React.createElement("li", null, React.createElement("a", {href: project.link, "data-icon": ""}, "Link")) : '',
-                            (project.npm) ? React.createElement("li", null, React.createElement("a", {href: project.npm, "data-icon": ""}, "npm")) : ''
+                            (project.npm) ? React.createElement("li", null, React.createElement("a", {href: project.npm, "data-icon": ""}, "npm")) : ''
 
                         
                     )
