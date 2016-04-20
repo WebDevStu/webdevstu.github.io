@@ -1,5 +1,13 @@
 [
     {
+        "id": "gitswap",
+        "title": "gitswap",
+        "content": [
+            "Node app that manages many git profiles on one machine. Works by either updating the local repository config file or the global .gitconfig file with presaved credentials"
+        ],
+        "npm": "https://www.npmjs.com/package/gitswap"
+    },
+    {
         "id": "peg-solitaire",
         "title": "Peg Solitaire",
         "content": [
