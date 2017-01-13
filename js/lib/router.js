@@ -112,7 +112,7 @@ module.exports = function (state) {
             item.selected = !!item;
         }
 
-        Navigation.render(state);
+        // Navigation.render(state);
     };
 
     // public methods
