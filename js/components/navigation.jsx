@@ -7,7 +7,6 @@ var React       = require('react'),
     Navigation  = React.createClass({
 
         render: function () {
-            /**
             return (
                 <nav>
                     {
@@ -22,7 +21,6 @@ var React       = require('react'),
                     }
                 </nav>
             );
-            */
         }
     });
 
